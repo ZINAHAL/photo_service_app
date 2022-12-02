@@ -13,7 +13,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Kenneth Mallabo & Zinah Al-Baghdadi
@@ -24,11 +26,16 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
      * Creates new form PhotoServiceApp
      */
     public PhotoServiceApp1() {
-        initComponents();
+        // initComponents();
         // variables
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        ResultSet resultStockDesc1;
+        ResultSet resultUsers;
+        ResultSet resultStocks;
+        ResultSet resultOverdue;
+        int y;
         String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
         String dbURL = "jdbc:ucanaccess://" + msAccDB;
 
@@ -44,6 +51,10 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         // Step 2: Opening database connection
         try {
             String sqlStr = "SELECT * FROM Admin";
+            String sqlStr1 = "SELECT description FROM StockDetails WHERE sellPrice=10";
+            String sqlStr2 = "SELECT * FROM Client";
+            String sqlStr3 = "SELECT * FROM StockDetails";
+            String sqlStr4 = "SELECT * FROM Rent";
             // Step 2.A: Create and get connection using DriverManager class
             connection = DriverManager.getConnection(dbURL);
 
@@ -52,12 +63,84 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
             // Step 2.C: Executing SQL &amp; retrieve data into ResultSet
             resultSet = statement.executeQuery(sqlStr);
-
+            resultStockDesc1 = statement.executeQuery(sqlStr1);
+            resultUsers = statement.executeQuery(sqlStr2);
+            resultStocks = statement.executeQuery(sqlStr3);
+            resultOverdue = statement.executeQuery(sqlStr4);
+            
+            // retrieve stock description of tripod
+            ResultSetMetaData metaData1 = resultStockDesc1.getMetaData();
+            int numberOfColumns = metaData1.getColumnCount();
+             while (resultStockDesc1.next()) {
+                System.out.println("");
+                for (int i = 1; i <= numberOfColumns; i++) {
+                    System.out.printf("%-8s\t", resultStockDesc1.getString(i));
+                    stockDesc1 = resultStockDesc1.getString(i);
+                    //System.out.printf(stockDesc1);
+                    //setStockDesc1(stockDesc1);
+                }
+            }
+            // retrieve users' data
+            ResultSetMetaData metaData2 = resultUsers.getMetaData(); 
+            int numberOfColumns1 = metaData2.getColumnCount();
+            StringBuilder sb = new StringBuilder(numberOfColumns1);
+             while (resultUsers.next()) {
+                System.out.println("");
+                for (int i = 1; i <= numberOfColumns1; i++) {
+                    sb.append(metaData2.getColumnName(i) + "    ");
+                }
+                sb.append("\n");
+                for (int i = 1; i <= numberOfColumns1; i++) {
+                    y = i - 1;
+                    //userList[y] = resultUsers.getString(i);
+                    sb.append( resultUsers.getString(i) + "   ");
+                }
+            }
+            this.sbUsers = sb;
+            
+            // retrieve stock data
+            ResultSetMetaData metaData3 = resultStocks.getMetaData(); 
+            int numberOfColumns3 = metaData3.getColumnCount();
+            StringBuilder sb2 = new StringBuilder(numberOfColumns3);
+            for (int i = 1; i <= numberOfColumns3; i++) {
+                    sb2.append(metaData3.getColumnName(i) + "    ");
+            }
+            while (resultStocks.next()) {
+                System.out.println("");
+                
+                sb2.append("\n");
+                for (int i = 1; i <= numberOfColumns3; i++) {
+                    y = i - 1;
+                    //userList[y] = resultStocks.getString(i);
+                    sb2.append(resultStocks.getString(i) + "   ");
+                }
+            }
+            this.sbStocks = sb2;
+            
+            // retrieve overdue rent data
+            ResultSetMetaData metaData4 = resultOverdue.getMetaData(); 
+            int numberOfColumns4 = metaData4.getColumnCount();
+            //String s3 = String.valueOf(numberOfColumns4);
+            StringBuilder sb3 = new StringBuilder(numberOfColumns4);
+            for (int i = 1; i <= numberOfColumns3; i++) {
+                    sb3.append(metaData4.getColumnName(i) + "    ");
+            }
+            while (resultOverdue.next()) {
+                System.out.println("");
+                sb3.append("\n");
+                for (int i = 1; i <= numberOfColumns4; i++) {
+                    y = i - 1;
+                    //userList[y] = resultStocks.getString(i);
+                    sb3.append(resultOverdue.getString(i) + "   ");
+                }
+            }
+            this.sbOverdue = sb3;
+            
             // hardcoded header
             //System.out.println("#\t\tName\t\tLocation\tDept#");
             //System.out.println("=====\t\t=========\t=======\t\t=======");
             ResultSetMetaData metaData = resultSet.getMetaData();
-            int numberOfColumns = metaData.getColumnCount();
+            //int numberOfColumns = metaData.getColumnCount();
             // display the names of the columns in the ResultSet
             for (int i = 1; i <= numberOfColumns; i++) {
                 System.out.printf("%-8s\t", metaData.getColumnName(i));
@@ -104,8 +187,77 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 System.err.println(sqlex.getMessage());
             }
         }
+        initComponents();
+    }
+    
+     public static Connection getConnection(){ 
+        // variables
+        Connection connection = null;
+        
+        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
+        String dbURL = "jdbc:ucanaccess://" + msAccDB;
+
+        // Step 1: Loading or registering JDBC driver class
+        try {
+            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+        } catch (ClassNotFoundException cnfex) {
+            System.out.println("Problem in loading or "
+                    + "registering MS Access JDBC driver");
+            cnfex.printStackTrace();
+        }
+        try {
+            // Step 2.A: Create and get connection using DriverManager class
+            connection = DriverManager.getConnection(dbURL);
+            
+        } catch (SQLException sqlex) {
+            System.err.println("SQL statement issue " + sqlex.getMessage());
+        } 
+        return connection;
+    }
+    
+    // checks if user already exists in the database for registration
+    public boolean checkUsername(String username)
+    {
+        Statement statement = null;
+        PreparedStatement pStatement;
+        ResultSet rs;
+        boolean checkUser = false;
+        String query = "SELECT * FROM Client WHERE username =" + username;
+        
+        try {
+            //Creating JDBC Statement
+            statement = PhotoServiceApp1.getConnection().createStatement();
+            rs = statement.executeQuery(query);
+            
+            if(rs.next())
+            {
+                checkUser = true;
+            }
+        } catch (SQLException sqlex) {
+            System.err.println(sqlex.getMessage());
+        }
+         return checkUser;
     }
 
+    public String getStockDesc1() {
+        return stockDesc1;
+    }
+
+    public StringBuilder getSbUsers() {
+        return sbUsers;
+    }
+
+    public StringBuilder getSbStocks() {
+        return sbStocks;
+    }
+
+    public StringBuilder getSbOverdue() {
+        return sbOverdue;
+    }
+
+    
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -234,21 +386,21 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jButton15 = new javax.swing.JButton();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel10 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        jButtonLogin = new javax.swing.JButton();
+        jPasswordFieldLogin = new javax.swing.JPasswordField();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldLoginUsername = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jLabel37 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldUserRegister = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jPasswordFieldRegister1 = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
-        jPasswordField3 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        jPasswordFieldRegister2 = new javax.swing.JPasswordField();
+        jButtonRegister = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jTextField5 = new javax.swing.JTextField();
         jButton16 = new javax.swing.JButton();
@@ -446,6 +598,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jTextArea5.setEditable(false);
         jTextArea5.setColumns(20);
         jTextArea5.setRows(5);
+        jTextArea5.setText(getStockDesc1());
         jScrollPane6.setViewportView(jTextArea5);
 
         jLabel56.setText("50-inch Lightweight Camera Mount Tripod Stand");
@@ -459,6 +612,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jLabel58.setText("Quantity");
 
+        jLabel59.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenne\\Downloads\\tripod.jfif")); // NOI18N
         jLabel59.setText("jLabel9");
 
         jTextField11.setText("1");
@@ -698,8 +852,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel42)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 487, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel42))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -755,7 +908,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(158, 158, 158)
                         .addComponent(jButton8)))
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel60)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -858,16 +1011,16 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel45)
                             .addComponent(jLabel51))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel47)
                             .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(157, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(843, 843, 843)
                     .addComponent(jButton12)
-                    .addContainerGap(1118, Short.MAX_VALUE)))
+                    .addContainerGap(1172, Short.MAX_VALUE)))
         );
 
         jScrollPane1.setViewportView(jPanel2);
@@ -1062,16 +1215,21 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jTabbedPane523.addTab("Rentals", jPanel9);
 
-        jButton2.setText("Login");
+        jButtonLogin.setText("Login");
+        jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLoginActionPerformed(evt);
+            }
+        });
 
-        jPasswordField2.setText("jPasswordField1");
+        jPasswordFieldLogin.setText("jPasswordField1");
 
         jLabel34.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel34.setText("Login Page");
 
         jLabel35.setText("Username");
 
-        jTextField2.setText("jTextField1");
+        jTextFieldLoginUsername.setText("jTextField1");
 
         jLabel36.setText("Password");
 
@@ -1083,15 +1241,15 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addGap(462, 462, 462)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton2)
-                        .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonLogin)
+                        .addComponent(jPasswordFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldLoginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(519, Short.MAX_VALUE))
         );
@@ -1103,13 +1261,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel35)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldLoginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel36)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPasswordFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(jButtonLogin)
                 .addContainerGap(1182, Short.MAX_VALUE))
         );
 
@@ -1120,17 +1278,22 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jLabel3.setText("Username");
 
-        jTextField1.setText("jTextField1");
+        jTextFieldUserRegister.setText("jTextField1");
 
         jLabel4.setText("Password");
 
-        jPasswordField1.setText("jPasswordField1");
+        jPasswordFieldRegister1.setText("jPasswordField1");
 
         jLabel5.setText("Password Again");
 
-        jPasswordField3.setText("jPasswordField3");
+        jPasswordFieldRegister2.setText("jPasswordField3");
 
-        jButton1.setText("Register");
+        jButtonRegister.setText("Register");
+        jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegisterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -1142,17 +1305,17 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jTextFieldUserRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPasswordField3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPasswordFieldRegister2, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPasswordFieldRegister1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jButton1)))
+                        .addComponent(jButtonRegister)))
                 .addContainerGap(509, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
@@ -1163,17 +1326,17 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldUserRegister, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPasswordFieldRegister1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPasswordFieldRegister2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(jButtonRegister)
                 .addContainerGap(1141, Short.MAX_VALUE))
         );
 
@@ -1254,16 +1417,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(462, 462, 462)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel85, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton17))
-                        .addContainerGap(537, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel85, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton17))
+                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(438, 438, 438)
                 .addComponent(jLabel81)
@@ -1309,16 +1469,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(462, 462, 462)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel92, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel91, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton18))
-                        .addContainerGap(537, Short.MAX_VALUE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel92, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel91, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton18))
+                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(455, 455, 455)
                 .addComponent(jLabel89)
@@ -1350,6 +1507,10 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        StringBuilder tempSb = new StringBuilder();
+        tempSb.append(getSbUsers());
+        String usersString = tempSb.toString();
+        jTextArea1.setText(usersString);
         jScrollPane2.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -1357,14 +1518,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(380, 380, 380)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(449, 449, 449)
-                        .addComponent(jLabel93)))
-                .addContainerGap(477, Short.MAX_VALUE))
+                .addGap(449, 449, 449)
+                .addComponent(jLabel93)
+                .addContainerGap(545, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1372,8 +1532,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel93)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1247, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(815, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("List of Users", jPanel8);
@@ -1381,6 +1541,10 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jTextArea2.setEditable(false);
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
+        StringBuilder tempSb2 = new StringBuilder();
+        tempSb2.append(getSbStocks());
+        String stockString = tempSb2.toString();
+        jTextArea2.setText(stockString);
         jScrollPane3.setViewportView(jTextArea2);
 
         jLabel94.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -1391,14 +1555,10 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(380, 380, 380)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(449, 449, 449)
-                        .addComponent(jLabel94)))
-                .addContainerGap(477, Short.MAX_VALUE))
+                .addGap(449, 449, 449)
+                .addComponent(jLabel94)
+                .addContainerGap(544, Short.MAX_VALUE))
+            .addComponent(jScrollPane3)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1406,8 +1566,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel94)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1247, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(815, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("List of Stock", jPanel13);
@@ -1415,6 +1575,10 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jTextArea4.setEditable(false);
         jTextArea4.setColumns(20);
         jTextArea4.setRows(5);
+        StringBuilder tempSb3 = new StringBuilder();
+        tempSb3.append(getSbOverdue());
+        String overdueString = tempSb3.toString();
+        jTextArea4.setText(overdueString);
         jScrollPane5.setViewportView(jTextArea4);
 
         jLabel95.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -1425,14 +1589,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addGap(380, 380, 380)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addGap(434, 434, 434)
-                        .addComponent(jLabel95)))
-                .addContainerGap(477, Short.MAX_VALUE))
+                .addGap(434, 434, 434)
+                .addComponent(jLabel95)
+                .addContainerGap(533, Short.MAX_VALUE))
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane5)
+                .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1440,8 +1603,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel95)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1247, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(815, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Overdue Rentals", jPanel14);
@@ -1557,6 +1720,80 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField13ActionPerformed
 
+    private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
+        // TODO add your handling code here:
+        String loginUsername = jTextFieldLoginUsername.getText();
+        String loginPassword = String.valueOf(jPasswordFieldLogin.getPassword());
+        ResultSet rs;
+        Statement statement;
+        PreparedStatement pStatement;
+        
+        //String query = "SELECT * FROM Client WHERE username=" + loginUsername +" AND password=" + loginPassword;
+        String query = "SELECT * FROM Client WHERE username = ? AND password = ?"; 
+        try {
+                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+                pStatement.setString(1, loginUsername);
+                pStatement.setString(2, loginPassword);
+                //rs = statement.executeQuery(query);
+                rs = pStatement.executeQuery();
+                
+                if(rs.next()) {
+                    JOptionPane.showMessageDialog(null, "Login successful");
+                } 
+                
+                else {
+                    JOptionPane.showMessageDialog(null, "Incorrect username or password");
+                }
+        } catch (SQLException sqlex) {
+             System.err.println(sqlex.getMessage());
+        }
+    }//GEN-LAST:event_jButtonLoginActionPerformed
+
+    private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
+        // TODO add your handling code here:
+        String uname = jTextFieldUserRegister.getText();
+        String pass = String.valueOf(jPasswordFieldRegister1.getPassword());
+        String re_pass = String.valueOf(jPasswordFieldRegister2.getPassword());
+        Statement statement;
+        ResultSet rs;
+                
+        if(uname.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Add A Username");
+        }
+        
+        else if(pass.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Add A Password");
+        }
+        else if(!pass.equals(re_pass))
+        {
+            JOptionPane.showMessageDialog(null, "Retype The Password Again");
+        }
+        
+        else if(checkUsername(uname))
+        {
+            JOptionPane.showMessageDialog(null, "This Username Already Exist");
+        }
+        
+        else{
+            String query = "INSERT INTO Client(0," + uname +"," + pass + ")";
+
+            try {
+                statement = PhotoServiceApp1.getConnection().createStatement();
+                rs = statement.executeQuery(query);
+
+                if(rs.rowUpdated() == true)
+                {
+                    JOptionPane.showMessageDialog(null, "New User Add");
+                }
+
+            } catch (SQLException sqlex) {
+                System.err.println(sqlex.getMessage());
+            }
+        }            
+    }//GEN-LAST:event_jButtonRegisterActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1594,7 +1831,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -1604,7 +1840,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -1612,6 +1847,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButtonLogin;
+    private javax.swing.JButton jButtonRegister;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
@@ -1701,10 +1938,10 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JPasswordField jPasswordField3;
     private javax.swing.JPasswordField jPasswordField4;
+    private javax.swing.JPasswordField jPasswordFieldLogin;
+    private javax.swing.JPasswordField jPasswordFieldRegister1;
+    private javax.swing.JPasswordField jPasswordFieldRegister2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JPopupMenu jPopupMenu3;
@@ -1740,7 +1977,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea7;
     private javax.swing.JTextArea jTextArea8;
     private javax.swing.JTextArea jTextArea9;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
@@ -1748,7 +1984,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
@@ -1756,8 +1991,14 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTextFieldLoginUsername;
+    private javax.swing.JTextField jTextFieldUserRegister;
     private java.awt.PopupMenu popupMenu1;
     private java.awt.PopupMenu popupMenu2;
     private java.awt.PopupMenu popupMenu3;
     // End of variables declaration//GEN-END:variables
+    private String stockDesc1;
+    private StringBuilder sbUsers;
+    private StringBuilder sbStocks;
+    private StringBuilder sbOverdue;
 }
