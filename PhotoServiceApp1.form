@@ -267,7 +267,7 @@
                           <Component id="jLabel8" min="-2" pref="26" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" pref="33" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="1410" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="601" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -306,7 +306,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="1412" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="603" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -803,9 +803,6 @@
                         <Property name="editable" type="boolean" value="false"/>
                         <Property name="columns" type="int" value="20"/>
                         <Property name="rows" type="int" value="5"/>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="getStockDesc1()" type="code"/>
-                        </Property>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -1232,7 +1229,7 @@
                               <Component id="jButton15" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="761" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1435,7 +1432,7 @@
                           <Component id="jPasswordFieldLogin" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jButtonLogin" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="1182" max="32767" attributes="0"/>
+                          <EmptySpace pref="373" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1528,7 +1525,7 @@
                           <Component id="jPasswordFieldRegister2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jButtonRegister" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="1129" max="32767" attributes="0"/>
+                          <EmptySpace pref="320" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1618,7 +1615,7 @@
                           <Component id="jTextFieldRemoveUsername" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jButtonRemoveAccount" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="1220" max="32767" attributes="0"/>
+                          <EmptySpace pref="411" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1666,11 +1663,13 @@
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="462" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jLabel40" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
-                                      <Component id="jTextFieldReturnRentedUsername" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
                                       <Component id="jLabel85" alignment="1" min="-2" pref="67" max="-2" attributes="0"/>
-                                      <Component id="jButtonReturnRent" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jTextFieldReturnRentedID" alignment="1" min="-2" pref="72" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jTextFieldReturnRentedUsername" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="jLabel40" alignment="1" pref="71" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Component id="jButtonReturnRent" alignment="1" min="-2" pref="72" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -1697,7 +1696,7 @@
                           <Component id="jTextFieldReturnRentedID" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jButtonReturnRent" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="1182" max="32767" attributes="0"/>
+                          <EmptySpace pref="373" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1759,7 +1758,7 @@
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButtonReturnProduct" min="-2" pref="77" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldReturnProductUsername" min="-2" pref="76" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="462" max="-2" attributes="0"/>
@@ -1768,11 +1767,11 @@
                                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="1" attributes="0">
                                               <Component id="jLabel92" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
-                                              <Component id="jTextFieldReturnProductUsername" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
                                               <Component id="jLabel91" alignment="1" min="-2" pref="67" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Component id="jTextFieldReturnProductItemID" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
+                                      <Component id="jButtonReturnProduct" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -1793,9 +1792,9 @@
                           <Component id="jLabel92" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextFieldReturnProductItemID" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jButtonReturnProduct" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="1190" max="32767" attributes="0"/>
+                          <EmptySpace pref="373" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1867,7 +1866,7 @@
                           <Component id="jLabel93" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="518" max="-2" attributes="0"/>
-                          <EmptySpace pref="815" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1932,7 +1931,7 @@
                           <Component id="jLabel94" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane3" min="-2" pref="518" max="-2" attributes="0"/>
-                          <EmptySpace pref="815" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2001,7 +2000,7 @@
                           <Component id="jLabel95" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane5" min="-2" pref="518" max="-2" attributes="0"/>
-                          <EmptySpace pref="815" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2078,7 +2077,7 @@
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           <Component id="jButtonLogout" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="1228" max="32767" attributes="0"/>
+                          <EmptySpace pref="419" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

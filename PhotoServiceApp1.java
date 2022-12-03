@@ -34,7 +34,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         ResultSet resultUsers;
         ResultSet resultStocks;
         ResultSet resultOverdue;
-        int y;
         String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
         String dbURL = "jdbc:ucanaccess://" + msAccDB;
 
@@ -49,6 +48,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         }
         // Step 2: Opening database connection
         try {
+            // initialise SQL query strings
             String sqlStr = "SELECT * FROM Admin";
             String sqlStr2 = "SELECT * FROM Client";
             String sqlStr3 = "SELECT brandName, stockName, sellPrice, stockPhoto FROM StockDetails";
@@ -65,53 +65,68 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             resultStocks = statement.executeQuery(sqlStr3);
             resultOverdue = statement.executeQuery(sqlStr4);
             
-            // retrieve users' data
+            // retrieve users' data by using metadata
             ResultSetMetaData metaData2 = resultUsers.getMetaData(); 
+            // fetch how many columns in meta data
             int numberOfColumns1 = metaData2.getColumnCount();
+            // using StringBuilder to append each data read from database
             StringBuilder sb = new StringBuilder(numberOfColumns1);
             for (int i = 1; i <= numberOfColumns1; i++) {
-                    sb.append(metaData2.getColumnName(i) + "    ");
+                // append each name of the columns
+                sb.append(metaData2.getColumnName(i) + "    ");
             }
+            // check if there are data from the database
             while (resultUsers.next()) {
                 sb.append("\n");
                 for (int i = 1; i <= numberOfColumns1; i++) {
-                    y = i - 1;
+                    // append each data
                     sb.append( resultUsers.getString(i) + "   ");
                 }
             }
+            // set private StringBuilder variable from local method
             this.sbUsers = sb;
             
-            // retrieve stock data
+            // retrieve stock data by using metadata
             ResultSetMetaData metaData3 = resultStocks.getMetaData(); 
+            // fetch how many columns in meta data
             int numberOfColumns3 = metaData3.getColumnCount();
+            // using StringBuilder to append each data read from database
             StringBuilder sb2 = new StringBuilder(numberOfColumns3);
             for (int i = 1; i <= numberOfColumns3; i++) {
-                    sb2.append(metaData3.getColumnName(i) + "    ");
+                // append each name of the columns
+                sb2.append(metaData3.getColumnName(i) + "    ");
             }
+            // check if there are data from the database
             while (resultStocks.next()) {
                 sb2.append("\n");
                 for (int i = 1; i <= numberOfColumns3; i++) {
-                    y = i - 1;
+                    // append each data
                     sb2.append(resultStocks.getString(i) + "   ");
                 }
             }
+            // set private StringBuilder variable from local method
             this.sbStocks = sb2;
             
-            // retrieve overdue rent data
+            // retrieve overdue rent data by using metadata
             ResultSetMetaData metaData4 = resultOverdue.getMetaData(); 
+            // fetch how many columns in meta data
             int numberOfColumns4 = metaData4.getColumnCount();
+            // using StringBuilder to append each data read from database
             StringBuilder sb3 = new StringBuilder(numberOfColumns4);
             for (int i = 1; i <= numberOfColumns4; i++) {
-                    sb3.append(metaData4.getColumnName(i) + "    ");
+                // append each name of the columns
+                sb3.append(metaData4.getColumnName(i) + "    ");
             }
+            // check if there are data from the database
             while (resultOverdue.next()) {
                 System.out.println("");
                 sb3.append("\n");
                 for (int i = 1; i <= numberOfColumns4; i++) {
-                    y = i - 1;
+                    // append each data
                     sb3.append(resultOverdue.getString(i) + "   ");
                 }
             }
+            // set private StringBuilder variable from local method
             this.sbOverdue = sb3;
 
         } catch (SQLException sqlex) {
@@ -136,9 +151,11 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 System.err.println(sqlex.getMessage());
             }
         }
+        // initialise GUI
         initComponents();
     }
     
+    // method to get connection to the database
      public static Connection getConnection(){ 
         // variables
         Connection connection = null;
@@ -168,26 +185,34 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     // checks if user already exists in the database for registration
     public boolean checkUsername(String username)
     {
+        // variables
         PreparedStatement pStatement;
         ResultSet rs;
         boolean checkUser = false;
+        // initialise SQL query strings
         String query = "SELECT * FROM Client WHERE username = ?";
+        String query2 = "SELECT * FROM Admin WHERE username = ?";
         
         try {
-            //Creating JDBC Statement
+            //Creating JDBC prepare Statement
             pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+            // set parameters
             pStatement.setString(1, username);
+            // execute SQL query
             rs = pStatement.executeQuery();
-            
+            // check if there are data from the database
             if(rs.next())
             {
                 checkUser = true;
             }
             else{
-                String query2 = "SELECT * FROM Admin WHERE username = ?";
+                //Creating JDBC prepare Statement
                 pStatement = PhotoServiceApp1.getConnection().prepareStatement(query2);
+                // set parameters
                 pStatement.setString(1, username);
+                // execute SQL query
                 rs = pStatement.executeQuery();
+                // check if there are data from the database
                 if(rs.next())
                 {
                     checkUser = true;
@@ -197,10 +222,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             System.err.println(sqlex.getMessage());
         }
          return checkUser;
-    }
-
-    public String getStockDesc1() {
-        return stockDesc1;
     }
 
     public StringBuilder getSbUsers() {
@@ -214,9 +235,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     public StringBuilder getSbOverdue() {
         return sbOverdue;
     }
-
-    
-
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -514,7 +532,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1412, Short.MAX_VALUE)
+            .addGap(0, 603, Short.MAX_VALUE)
         );
 
         jTabbedPane523.addTab("Home", jPanel12);
@@ -562,7 +580,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jTextArea5.setEditable(false);
         jTextArea5.setColumns(20);
         jTextArea5.setRows(5);
-        jTextArea5.setText(getStockDesc1());
         jScrollPane6.setViewportView(jTextArea5);
 
         jLabel56.setText("50-inch Lightweight Camera Mount Tripod Stand");
@@ -1173,7 +1190,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(158, 158, 158)
                         .addComponent(jButton15)))
-                .addContainerGap(761, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane523.addTab("Rentals", jPanel9);
@@ -1229,7 +1246,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jPasswordFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonLogin)
-                .addContainerGap(1182, Short.MAX_VALUE))
+                .addContainerGap(373, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Login", jPanelLogin);
@@ -1289,7 +1306,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jPasswordFieldRegister2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonRegister)
-                .addContainerGap(1129, Short.MAX_VALUE))
+                .addContainerGap(320, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Register", jPanelRegister);
@@ -1334,7 +1351,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jTextFieldRemoveUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonRemoveAccount)
-                .addContainerGap(1220, Short.MAX_VALUE))
+                .addContainerGap(411, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Settings", jPanelSettings);
@@ -1369,11 +1386,12 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(jPanelReturnRentLayout.createSequentialGroup()
                         .addGap(462, 462, 462)
                         .addGroup(jPanelReturnRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldReturnRentedUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel85, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonReturnRent)
-                            .addComponent(jTextFieldReturnRentedID, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldReturnRentedID, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelReturnRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextFieldReturnRentedUsername, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel40, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))
+                            .addComponent(jButtonReturnRent, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelReturnRentLayout.createSequentialGroup()
                         .addGap(438, 438, 438)
                         .addComponent(jLabel81)))
@@ -1394,7 +1412,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jTextFieldReturnRentedID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonReturnRent)
-                .addContainerGap(1182, Short.MAX_VALUE))
+                .addContainerGap(373, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Return Rented Item", jPanelReturnRent);
@@ -1425,7 +1443,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addGroup(jPanelReturnProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelReturnProductLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButtonReturnProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldReturnProductUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelReturnProductLayout.createSequentialGroup()
                         .addGap(462, 462, 462)
                         .addGroup(jPanelReturnProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1433,9 +1451,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                                 .addGap(1, 1, 1)
                                 .addGroup(jPanelReturnProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel92, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldReturnProductUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel91, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jTextFieldReturnProductItemID, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextFieldReturnProductItemID, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonReturnProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelReturnProductLayout.setVerticalGroup(
@@ -1451,9 +1469,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jLabel92)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldReturnProductItemID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonReturnProduct)
-                .addContainerGap(1190, Short.MAX_VALUE))
+                .addContainerGap(373, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Return Product", jPanelReturnProduct);
@@ -1490,7 +1508,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jLabel93)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(815, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("List of Users", jPanelListUsers);
@@ -1525,7 +1543,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jLabel94)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(815, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("List of Stock", jPanelListStock);
@@ -1563,7 +1581,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jLabel95)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(815, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Overdue Rentals", jPanelOverdue);
@@ -1606,7 +1624,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addGap(38, 38, 38)
                 .addComponent(jButtonLogout)
-                .addContainerGap(1228, Short.MAX_VALUE))
+                .addContainerGap(419, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
@@ -1637,7 +1655,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 1410, Short.MAX_VALUE))))
+                        .addGap(0, 601, Short.MAX_VALUE))))
         );
 
         pack();
@@ -2142,7 +2160,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private java.awt.PopupMenu popupMenu2;
     private java.awt.PopupMenu popupMenu3;
     // End of variables declaration//GEN-END:variables
-    private String stockDesc1;
     private StringBuilder sbUsers;
     private StringBuilder sbStocks;
     private StringBuilder sbOverdue;
