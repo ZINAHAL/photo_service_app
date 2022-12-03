@@ -830,9 +830,6 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel59">
                   <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="2" name="C:\Users\kenne\Downloads\tripod.jfif"/>
-                    </Property>
                     <Property name="text" type="java.lang.String" value="jLabel9"/>
                   </Properties>
                 </Component>

@@ -31,7 +31,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        ResultSet resultStockDesc1;
         ResultSet resultUsers;
         ResultSet resultStocks;
         ResultSet resultOverdue;
@@ -51,9 +50,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         // Step 2: Opening database connection
         try {
             String sqlStr = "SELECT * FROM Admin";
-            String sqlStr1 = "SELECT description FROM StockDetails WHERE sellPrice=10";
             String sqlStr2 = "SELECT * FROM Client";
-            String sqlStr3 = "SELECT * FROM StockDetails";
+            String sqlStr3 = "SELECT brandName, stockName, sellPrice, stockPhoto FROM StockDetails";
             String sqlStr4 = "SELECT * FROM Rent";
             // Step 2.A: Create and get connection using DriverManager class
             connection = DriverManager.getConnection(dbURL);
@@ -63,36 +61,21 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
             // Step 2.C: Executing SQL &amp; retrieve data into ResultSet
             resultSet = statement.executeQuery(sqlStr);
-            resultStockDesc1 = statement.executeQuery(sqlStr1);
             resultUsers = statement.executeQuery(sqlStr2);
             resultStocks = statement.executeQuery(sqlStr3);
             resultOverdue = statement.executeQuery(sqlStr4);
             
-            // retrieve stock description of tripod
-            ResultSetMetaData metaData1 = resultStockDesc1.getMetaData();
-            int numberOfColumns = metaData1.getColumnCount();
-             while (resultStockDesc1.next()) {
-                System.out.println("");
-                for (int i = 1; i <= numberOfColumns; i++) {
-                    System.out.printf("%-8s\t", resultStockDesc1.getString(i));
-                    stockDesc1 = resultStockDesc1.getString(i);
-                    //System.out.printf(stockDesc1);
-                    //setStockDesc1(stockDesc1);
-                }
-            }
             // retrieve users' data
             ResultSetMetaData metaData2 = resultUsers.getMetaData(); 
             int numberOfColumns1 = metaData2.getColumnCount();
             StringBuilder sb = new StringBuilder(numberOfColumns1);
-             while (resultUsers.next()) {
-                System.out.println("");
-                for (int i = 1; i <= numberOfColumns1; i++) {
+            for (int i = 1; i <= numberOfColumns1; i++) {
                     sb.append(metaData2.getColumnName(i) + "    ");
-                }
+            }
+            while (resultUsers.next()) {
                 sb.append("\n");
                 for (int i = 1; i <= numberOfColumns1; i++) {
                     y = i - 1;
-                    //userList[y] = resultUsers.getString(i);
                     sb.append( resultUsers.getString(i) + "   ");
                 }
             }
@@ -106,12 +89,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     sb2.append(metaData3.getColumnName(i) + "    ");
             }
             while (resultStocks.next()) {
-                System.out.println("");
-                
                 sb2.append("\n");
                 for (int i = 1; i <= numberOfColumns3; i++) {
                     y = i - 1;
-                    //userList[y] = resultStocks.getString(i);
                     sb2.append(resultStocks.getString(i) + "   ");
                 }
             }
@@ -120,7 +100,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             // retrieve overdue rent data
             ResultSetMetaData metaData4 = resultOverdue.getMetaData(); 
             int numberOfColumns4 = metaData4.getColumnCount();
-            //String s3 = String.valueOf(numberOfColumns4);
             StringBuilder sb3 = new StringBuilder(numberOfColumns4);
             for (int i = 1; i <= numberOfColumns4; i++) {
                     sb3.append(metaData4.getColumnName(i) + "    ");
@@ -130,40 +109,10 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 sb3.append("\n");
                 for (int i = 1; i <= numberOfColumns4; i++) {
                     y = i - 1;
-                    //userList[y] = resultStocks.getString(i);
                     sb3.append(resultOverdue.getString(i) + "   ");
                 }
             }
             this.sbOverdue = sb3;
-            
-            // hardcoded header
-            //System.out.println("#\t\tName\t\tLocation\tDept#");
-            //System.out.println("=====\t\t=========\t=======\t\t=======");
-            ResultSetMetaData metaData = resultSet.getMetaData();
-            //int numberOfColumns = metaData.getColumnCount();
-            // display the names of the columns in the ResultSet
-            for (int i = 1; i <= numberOfColumns; i++) {
-                System.out.printf("%-8s\t", metaData.getColumnName(i));
-            }
-            System.out.println("");
-           for (int i = 1; i <= numberOfColumns; i++) {
-                System.out.printf("%-8s\t", "=========");
-            }
-            // processing returned data and printing into console
-            // Step 2.D: use data from ResultSet
-            /* while (resultSet.next()) {
-                System.out.println(resultSet.getString(1) + "\t"
-                        + resultSet.getString(2) + "\t\t"
-                        + resultSet.getString(3) + "\t"
-                        + resultSet.getString(4));
-            }*/
-    // use metadata
-            while (resultSet.next()) {
-                System.out.println("");
-                for (int i = 1; i <= numberOfColumns; i++) {
-                    System.out.printf("%-8s\t", resultSet.getString(i));
-                }
-            }
 
         } catch (SQLException sqlex) {
             System.err.println("SQL statement issue " + sqlex.getMessage());
@@ -206,24 +155,23 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             cnfex.printStackTrace();
         }
         try {
-            // Step 2.A: Create and get connection using DriverManager class
+            // Step 2: Create and get connection using DriverManager class
             connection = DriverManager.getConnection(dbURL);
             
         } catch (SQLException sqlex) {
             System.err.println("SQL statement issue " + sqlex.getMessage());
         } 
+        // return variable
         return connection;
     }
     
     // checks if user already exists in the database for registration
     public boolean checkUsername(String username)
     {
-        Statement statement = null;
         PreparedStatement pStatement;
         ResultSet rs;
         boolean checkUser = false;
         String query = "SELECT * FROM Client WHERE username = ?";
-        
         
         try {
             //Creating JDBC Statement
@@ -240,8 +188,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 pStatement = PhotoServiceApp1.getConnection().prepareStatement(query2);
                 pStatement.setString(1, username);
                 rs = pStatement.executeQuery();
-                //statement = PhotoServiceApp1.getConnection().createStatement();
-                //rs = statement.executeQuery(query2);
                 if(rs.next())
                 {
                     checkUser = true;
@@ -630,7 +576,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jLabel58.setText("Quantity");
 
-        jLabel59.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenne\\Downloads\\tripod.jfif")); // NOI18N
         jLabel59.setText("jLabel9");
 
         jTextField11.setText("1");
@@ -1841,7 +1786,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                         jTabbedPaneLoginRegister.addTab("Overdue Rentals", jPanelOverdue);
                         jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
                         jTabbedPaneLoginRegister.remove(jPanelLogin);
-                        jTabbedPaneLoginRegister.remove(jPanelRegister);
+                        jTabbedPaneLoginRegister.remove(jPanelRegister); 
+                        jTabbedPaneLoginRegister.remove(jPanelReturnRent);
+                        jTabbedPaneLoginRegister.remove(jPanelReturnProduct);
                     } 
                     else {
                         JOptionPane.showMessageDialog(null, "Incorrect username or password");
