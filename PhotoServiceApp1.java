@@ -222,16 +222,30 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         PreparedStatement pStatement;
         ResultSet rs;
         boolean checkUser = false;
-        String query = "SELECT * FROM Client WHERE username =" + username;
+        String query = "SELECT * FROM Client WHERE username = ?";
+        
         
         try {
             //Creating JDBC Statement
-            statement = PhotoServiceApp1.getConnection().createStatement();
-            rs = statement.executeQuery(query);
+            pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+            pStatement.setString(1, username);
+            rs = pStatement.executeQuery();
             
             if(rs.next())
             {
                 checkUser = true;
+            }
+            else{
+                String query2 = "SELECT * FROM Admin WHERE username = ?";
+                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query2);
+                pStatement.setString(1, username);
+                rs = pStatement.executeQuery();
+                //statement = PhotoServiceApp1.getConnection().createStatement();
+                //rs = statement.executeQuery(query2);
+                if(rs.next())
+                {
+                    checkUser = true;
+                }
             }
         } catch (SQLException sqlex) {
             System.err.println(sqlex.getMessage());
@@ -384,15 +398,15 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jLabel88 = new javax.swing.JLabel();
         jLabel90 = new javax.swing.JLabel();
         jButton15 = new javax.swing.JButton();
-        jTabbedPane3 = new javax.swing.JTabbedPane();
-        jPanel10 = new javax.swing.JPanel();
+        jTabbedPaneLoginRegister = new javax.swing.JTabbedPane();
+        jPanelLogin = new javax.swing.JPanel();
         jButtonLogin = new javax.swing.JButton();
         jPasswordFieldLogin = new javax.swing.JPasswordField();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jTextFieldLoginUsername = new javax.swing.JTextField();
         jLabel36 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
+        jPanelRegister = new javax.swing.JPanel();
         jLabel37 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldUserRegister = new javax.swing.JTextField();
@@ -401,37 +415,41 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPasswordFieldRegister2 = new javax.swing.JPasswordField();
         jButtonRegister = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        jPanelSettings = new javax.swing.JPanel();
         jTextFieldRemoveUsername = new javax.swing.JTextField();
         jButtonRemoveAccount = new javax.swing.JButton();
         jLabel46 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        jPanelReturnRent = new javax.swing.JPanel();
         jTextFieldReturnRentedUsername = new javax.swing.JTextField();
         jLabel40 = new javax.swing.JLabel();
         jButtonReturnRent = new javax.swing.JButton();
         jLabel81 = new javax.swing.JLabel();
         jLabel85 = new javax.swing.JLabel();
         jTextFieldReturnRentedID = new javax.swing.JTextField();
-        jPanel7 = new javax.swing.JPanel();
+        jPanelReturnProduct = new javax.swing.JPanel();
         jButtonReturnProduct = new javax.swing.JButton();
         jLabel89 = new javax.swing.JLabel();
         jLabel91 = new javax.swing.JLabel();
         jTextFieldReturnProductUsername = new javax.swing.JTextField();
         jLabel92 = new javax.swing.JLabel();
         jTextFieldReturnProductItemID = new javax.swing.JTextField();
-        jPanel8 = new javax.swing.JPanel();
+        jPanelListUsers = new javax.swing.JPanel();
         jLabel93 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jPanel13 = new javax.swing.JPanel();
+        jPanelListStock = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jLabel94 = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
+        jPanelOverdue = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTextArea4 = new javax.swing.JTextArea();
         jLabel95 = new javax.swing.JLabel();
+        jPanelLogout = new javax.swing.JPanel();
+        jButtonLogout = new javax.swing.JButton();
+        jLabel96 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -1235,14 +1253,14 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jLabel36.setText("Password");
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelLoginLayout = new javax.swing.GroupLayout(jPanelLogin);
+        jPanelLogin.setLayout(jPanelLoginLayout);
+        jPanelLoginLayout.setHorizontalGroup(
+            jPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLoginLayout.createSequentialGroup()
                 .addGap(463, 463, 463)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPasswordFieldLogin, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1251,9 +1269,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(527, Short.MAX_VALUE))
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        jPanelLoginLayout.setVerticalGroup(
+            jPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLoginLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1269,7 +1287,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addContainerGap(1182, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Login", jPanel10);
+        jTabbedPaneLoginRegister.addTab("Login", jPanelLogin);
 
         jLabel37.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel37.setText("Register Page");
@@ -1287,16 +1305,16 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelRegisterLayout = new javax.swing.GroupLayout(jPanelRegister);
+        jPanelRegister.setLayout(jPanelRegisterLayout);
+        jPanelRegisterLayout.setHorizontalGroup(
+            jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelRegisterLayout.createSequentialGroup()
                 .addGap(471, 471, 471)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelRegisterLayout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
@@ -1307,9 +1325,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addComponent(jButtonRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(509, Short.MAX_VALUE))
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        jPanelRegisterLayout.setVerticalGroup(
+            jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelRegisterLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1329,7 +1347,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addContainerGap(1129, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Register", jPanel11);
+        jTabbedPaneLoginRegister.addTab("Register", jPanelRegister);
 
         jButtonRemoveAccount.setText("Remove Account");
         jButtonRemoveAccount.addActionListener(new java.awt.event.ActionListener() {
@@ -1343,26 +1361,26 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jLabel55.setText("Username");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelSettingsLayout = new javax.swing.GroupLayout(jPanelSettings);
+        jPanelSettings.setLayout(jPanelSettingsLayout);
+        jPanelSettingsLayout.setHorizontalGroup(
+            jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSettingsLayout.createSequentialGroup()
+                .addGroup(jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelSettingsLayout.createSequentialGroup()
                         .addGap(462, 462, 462)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldRemoveUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonRemoveAccount)
                             .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSettingsLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(489, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jPanelSettingsLayout.setVerticalGroup(
+            jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSettingsLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1374,7 +1392,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addContainerGap(1220, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Settings", jPanel3);
+        jTabbedPaneLoginRegister.addTab("Settings", jPanelSettings);
+        jTabbedPaneLoginRegister.remove(jPanelSettings);
 
         jLabel40.setText("Item ID");
 
@@ -1396,28 +1415,28 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelReturnRentLayout = new javax.swing.GroupLayout(jPanelReturnRent);
+        jPanelReturnRent.setLayout(jPanelReturnRentLayout);
+        jPanelReturnRentLayout.setHorizontalGroup(
+            jPanelReturnRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelReturnRentLayout.createSequentialGroup()
+                .addGroup(jPanelReturnRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelReturnRentLayout.createSequentialGroup()
                         .addGap(462, 462, 462)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanelReturnRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldReturnRentedUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel85, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonReturnRent)
                             .addComponent(jTextFieldReturnRentedID, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(jPanelReturnRentLayout.createSequentialGroup()
                         .addGap(438, 438, 438)
                         .addComponent(jLabel81)))
                 .addContainerGap(510, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        jPanelReturnRentLayout.setVerticalGroup(
+            jPanelReturnRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelReturnRentLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel81, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1433,7 +1452,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addContainerGap(1182, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Return Rented Item", jPanel4);
+        jTabbedPaneLoginRegister.addTab("Return Rented Item", jPanelReturnRent);
 
         jButtonReturnProduct.setText("Return");
         jButtonReturnProduct.addActionListener(new java.awt.event.ActionListener() {
@@ -1449,34 +1468,34 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jLabel92.setText("Item ID");
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelReturnProductLayout = new javax.swing.GroupLayout(jPanelReturnProduct);
+        jPanelReturnProduct.setLayout(jPanelReturnProductLayout);
+        jPanelReturnProductLayout.setHorizontalGroup(
+            jPanelReturnProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelReturnProductLayout.createSequentialGroup()
                 .addGap(455, 455, 455)
                 .addComponent(jLabel89)
                 .addGap(0, 521, Short.MAX_VALUE))
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
+            .addGroup(jPanelReturnProductLayout.createSequentialGroup()
+                .addGroup(jPanelReturnProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelReturnProductLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButtonReturnProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelReturnProductLayout.createSequentialGroup()
                         .addGap(462, 462, 462)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanelReturnProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelReturnProductLayout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanelReturnProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel92, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextFieldReturnProductUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel91, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jTextFieldReturnProductItemID, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        jPanelReturnProductLayout.setVerticalGroup(
+            jPanelReturnProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelReturnProductLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel89, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1492,7 +1511,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addContainerGap(1190, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Return Product", jPanel7);
+        jTabbedPaneLoginRegister.addTab("Return Product", jPanelReturnProduct);
 
         jLabel93.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel93.setText("List of Users");
@@ -1506,22 +1525,22 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jTextArea1.setText(usersString);
         jScrollPane2.setViewportView(jTextArea1);
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelListUsersLayout = new javax.swing.GroupLayout(jPanelListUsers);
+        jPanelListUsers.setLayout(jPanelListUsersLayout);
+        jPanelListUsersLayout.setHorizontalGroup(
+            jPanelListUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelListUsersLayout.createSequentialGroup()
                 .addGap(449, 449, 449)
                 .addComponent(jLabel93)
                 .addContainerGap(545, Short.MAX_VALUE))
-            .addGroup(jPanel8Layout.createSequentialGroup()
+            .addGroup(jPanelListUsersLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2)
                 .addContainerGap())
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
+        jPanelListUsersLayout.setVerticalGroup(
+            jPanelListUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelListUsersLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel93)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1529,7 +1548,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addContainerGap(815, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("List of Users", jPanel8);
+        jTabbedPaneLoginRegister.addTab("List of Users", jPanelListUsers);
+        jTabbedPaneLoginRegister.remove(jPanelListUsers);
 
         jTextArea2.setEditable(false);
         jTextArea2.setColumns(20);
@@ -1543,19 +1563,19 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jLabel94.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel94.setText("List of Stock");
 
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelListStockLayout = new javax.swing.GroupLayout(jPanelListStock);
+        jPanelListStock.setLayout(jPanelListStockLayout);
+        jPanelListStockLayout.setHorizontalGroup(
+            jPanelListStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelListStockLayout.createSequentialGroup()
                 .addGap(449, 449, 449)
                 .addComponent(jLabel94)
                 .addContainerGap(544, Short.MAX_VALUE))
             .addComponent(jScrollPane3)
         );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
+        jPanelListStockLayout.setVerticalGroup(
+            jPanelListStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelListStockLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel94)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1563,7 +1583,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addContainerGap(815, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("List of Stock", jPanel13);
+        jTabbedPaneLoginRegister.addTab("List of Stock", jPanelListStock);
+        jTabbedPaneLoginRegister.remove(jPanelListStock);
 
         jTextArea4.setEditable(false);
         jTextArea4.setColumns(20);
@@ -1577,22 +1598,22 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jLabel95.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel95.setText("Overdue Rentals");
 
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelOverdueLayout = new javax.swing.GroupLayout(jPanelOverdue);
+        jPanelOverdue.setLayout(jPanelOverdueLayout);
+        jPanelOverdueLayout.setHorizontalGroup(
+            jPanelOverdueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelOverdueLayout.createSequentialGroup()
                 .addGap(434, 434, 434)
                 .addComponent(jLabel95)
                 .addContainerGap(533, Short.MAX_VALUE))
-            .addGroup(jPanel14Layout.createSequentialGroup()
+            .addGroup(jPanelOverdueLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane5)
                 .addContainerGap())
         );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
+        jPanelOverdueLayout.setVerticalGroup(
+            jPanelOverdueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelOverdueLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel95)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1600,9 +1621,53 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addContainerGap(815, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Overdue Rentals", jPanel14);
+        jTabbedPaneLoginRegister.addTab("Overdue Rentals", jPanelOverdue);
+        jTabbedPaneLoginRegister.remove(jPanelOverdue);
 
-        jTabbedPane523.addTab("Login/Register", jTabbedPane3);
+        jButtonLogout.setText("Logout");
+        jButtonLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLogoutActionPerformed(evt);
+            }
+        });
+
+        jLabel96.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel96.setText("Logout Page");
+
+        jLabel6.setText("Are you sure you want to logout?");
+
+        javax.swing.GroupLayout jPanelLogoutLayout = new javax.swing.GroupLayout(jPanelLogout);
+        jPanelLogout.setLayout(jPanelLogoutLayout);
+        jPanelLogoutLayout.setHorizontalGroup(
+            jPanelLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLogoutLayout.createSequentialGroup()
+                .addGroup(jPanelLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelLogoutLayout.createSequentialGroup()
+                        .addGap(463, 463, 463)
+                        .addGroup(jPanelLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonLogout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel96, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanelLogoutLayout.createSequentialGroup()
+                        .addGap(418, 418, 418)
+                        .addComponent(jLabel6)))
+                .addContainerGap(478, Short.MAX_VALUE))
+        );
+        jPanelLogoutLayout.setVerticalGroup(
+            jPanelLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLogoutLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel96, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addGap(38, 38, 38)
+                .addComponent(jButtonLogout)
+                .addContainerGap(1228, Short.MAX_VALUE))
+        );
+
+        jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
+        jTabbedPaneLoginRegister.remove(jPanelLogout);
+
+        jTabbedPane523.addTab("Login/Register", jTabbedPaneLoginRegister);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1709,7 +1774,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         // TODO add your handling code here:
         String returnRentUsername = jTextFieldReturnRentedUsername.getText();
         String returnRentID = jTextFieldReturnRentedID.getText();
-        ResultSet rs;
         PreparedStatement pStatement;
         if(returnRentUsername.equals(""))
         {
@@ -1727,8 +1791,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
                 pStatement.setString(1, returnRentUsername);
                 pStatement.setString(2, returnRentID);
-                //rs = statement.executeQuery(query);
-                //rs = pStatement.executeQuery();
 
                 if(pStatement.executeUpdate() > 0)
                 {
@@ -1750,24 +1812,40 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         String loginUsername = jTextFieldLoginUsername.getText();
         String loginPassword = String.valueOf(jPasswordFieldLogin.getPassword());
         ResultSet rs;
-        Statement statement;
         PreparedStatement pStatement;
         
-        //String query = "SELECT * FROM Client WHERE username=" + loginUsername +" AND password=" + loginPassword;
         String query = "SELECT * FROM Client WHERE username = ? AND password = ?"; 
         try {
                 pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
                 pStatement.setString(1, loginUsername);
                 pStatement.setString(2, loginPassword);
-                //rs = statement.executeQuery(query);
                 rs = pStatement.executeQuery();
                 
                 if(rs.next()) {
-                    JOptionPane.showMessageDialog(null, "Login successful");
+                    JOptionPane.showMessageDialog(null, "User Login successful");  
+                    jTabbedPaneLoginRegister.remove(jPanelLogin);
+                    jTabbedPaneLoginRegister.remove(jPanelRegister);
+                    jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
                 } 
-                
                 else {
-                    JOptionPane.showMessageDialog(null, "Incorrect username or password");
+                    String query2 = "SELECT * FROM Admin WHERE username = ? AND password = ?"; 
+                    pStatement = PhotoServiceApp1.getConnection().prepareStatement(query2);
+                    pStatement.setString(1, loginUsername);
+                    pStatement.setString(2, loginPassword);
+                    rs = pStatement.executeQuery();
+                    if(rs.next()) {
+                        JOptionPane.showMessageDialog(null, "Admin login successful");
+                        jTabbedPaneLoginRegister.addTab("Settings", jPanelSettings);
+                        jTabbedPaneLoginRegister.addTab("List of Users", jPanelListUsers);
+                        jTabbedPaneLoginRegister.addTab("List of Stock", jPanelListStock);
+                        jTabbedPaneLoginRegister.addTab("Overdue Rentals", jPanelOverdue);
+                        jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
+                        jTabbedPaneLoginRegister.remove(jPanelLogin);
+                        jTabbedPaneLoginRegister.remove(jPanelRegister);
+                    } 
+                    else {
+                        JOptionPane.showMessageDialog(null, "Incorrect username or password");
+                    }
                 }
         } catch (SQLException sqlex) {
              System.err.println(sqlex.getMessage());
@@ -1779,9 +1857,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         String registerUsername = jTextFieldUserRegister.getText();
         String registerPassword = String.valueOf(jPasswordFieldRegister1.getPassword());
         String registerRe_Password = String.valueOf(jPasswordFieldRegister2.getPassword());
-        Statement statement;
         PreparedStatement pStatement;
-        ResultSet rs;
+        
+        System.out.println(checkUsername(registerUsername));
                 
         if(registerUsername.equals(""))
         {
@@ -1797,7 +1875,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Retype The Password Again");
         }
         
-        else if(checkUsername(registerUsername))
+        else if(checkUsername(registerUsername) == true)
         {
             JOptionPane.showMessageDialog(null, "This Username Already Exist");
         }
@@ -1806,16 +1884,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             String query = "INSERT INTO Client(username, password) VALUES(?, ?)";
 
             try {
-                //statement = PhotoServiceApp1.getConnection().createStatement();
                 pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
                 pStatement.setString(1, registerUsername);
                 pStatement.setString(2, registerPassword);
-                //rs = statement.executeQuery(query);
-                //rs = pStatement.executeQuery();
 
                 if(pStatement.executeUpdate() > 0)
                 {
-                    JOptionPane.showMessageDialog(null, "New User Add");
+                    JOptionPane.showMessageDialog(null, "New User Added");
                 }
 
             } catch (SQLException sqlex) {
@@ -1894,6 +1969,25 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonReturnProductActionPerformed
 
+    private void jButtonLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogoutActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Logged out of account");
+        jTabbedPaneLoginRegister.remove(jPanelLogout);
+        jTabbedPaneLoginRegister.remove(jPanelSettings);
+        jTabbedPaneLoginRegister.remove(jPanelListUsers);
+        jTabbedPaneLoginRegister.remove(jPanelListStock);
+        jTabbedPaneLoginRegister.remove(jPanelOverdue);
+        jTabbedPaneLoginRegister.remove(jPanelRegister);
+        jTabbedPaneLoginRegister.remove(jPanelReturnRent);
+        jTabbedPaneLoginRegister.remove(jPanelReturnProduct);
+        
+        jTabbedPaneLoginRegister.addTab("Login", jPanelLogin);
+        jTabbedPaneLoginRegister.addTab("Register", jPanelRegister);
+        jTabbedPaneLoginRegister.addTab("Return Rented Item", jPanelReturnRent);
+        jTabbedPaneLoginRegister.addTab("Return Product", jPanelReturnProduct);
+        
+    }//GEN-LAST:event_jButtonLogoutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1945,6 +2039,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonLogin;
+    private javax.swing.JButton jButtonLogout;
     private javax.swing.JButton jButtonRegister;
     private javax.swing.JButton jButtonRemoveAccount;
     private javax.swing.JButton jButtonReturnProduct;
@@ -1986,6 +2081,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
@@ -2023,21 +2119,23 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel93;
     private javax.swing.JLabel jLabel94;
     private javax.swing.JLabel jLabel95;
+    private javax.swing.JLabel jLabel96;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelListStock;
+    private javax.swing.JPanel jPanelListUsers;
+    private javax.swing.JPanel jPanelLogin;
+    private javax.swing.JPanel jPanelLogout;
+    private javax.swing.JPanel jPanelOverdue;
+    private javax.swing.JPanel jPanelRegister;
+    private javax.swing.JPanel jPanelReturnProduct;
+    private javax.swing.JPanel jPanelReturnRent;
+    private javax.swing.JPanel jPanelSettings;
     private javax.swing.JPasswordField jPasswordField4;
     private javax.swing.JPasswordField jPasswordFieldLogin;
     private javax.swing.JPasswordField jPasswordFieldRegister1;
@@ -2063,8 +2161,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JTabbedPane jTabbedPane523;
+    private javax.swing.JTabbedPane jTabbedPaneLoginRegister;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea10;
     private javax.swing.JTextArea jTextArea11;
