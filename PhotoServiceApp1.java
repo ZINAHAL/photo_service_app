@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.photoserviceproject;
 
 /*
@@ -34,7 +30,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         ResultSet resultUsers;
         ResultSet resultStocks;
         ResultSet resultOverdue;
-        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
+        String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
         String dbURL = "jdbc:ucanaccess://" + msAccDB;
 
         // Step 1: Loading or registering JDBC driver class
@@ -160,9 +156,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         // variables
         Connection connection = null;
         
-        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
+        String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
         String dbURL = "jdbc:ucanaccess://" + msAccDB;
-
         // Step 1: Loading or registering JDBC driver class
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
@@ -273,8 +268,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jPopupMenu7 = new javax.swing.JPopupMenu();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jTabbedPane523 = new javax.swing.JTabbedPane();
         jPanel12 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -519,20 +512,19 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jLabel15.setText("jLabel15");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel2.setText("Photo Service");
-
-        jLabel8.setText("jLabel8");
+        setPreferredSize(new java.awt.Dimension(1000, 570));
+        setSize(new java.awt.Dimension(1000, 700));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1071, Short.MAX_VALUE)
+            .addGap(0, 1035, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 603, Short.MAX_VALUE)
+            .addGap(0, 572, Short.MAX_VALUE)
         );
 
         jTabbedPane523.addTab("Home", jPanel12);
@@ -861,7 +853,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(888, Short.MAX_VALUE)
+                    .addContainerGap(890, Short.MAX_VALUE)
                     .addComponent(jButton12)
                     .addGap(662, 662, 662)))
         );
@@ -991,11 +983,11 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel45)
                             .addComponent(jLabel51))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel47)
                             .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addContainerGap(165, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(843, 843, 843)
@@ -1134,7 +1126,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(862, 862, 862)
                         .addComponent(jButton15)))
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1229,7 +1221,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addComponent(jTextFieldLoginUsername, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                     .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(527, Short.MAX_VALUE))
+                .addContainerGap(486, Short.MAX_VALUE))
         );
         jPanelLoginLayout.setVerticalGroup(
             jPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1246,7 +1238,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jPasswordFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonLogin)
-                .addContainerGap(373, Short.MAX_VALUE))
+                .addContainerGap(348, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Login", jPanelLogin);
@@ -1285,7 +1277,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addComponent(jPasswordFieldRegister1)
                     .addComponent(jTextFieldUserRegister)
                     .addComponent(jButtonRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(509, Short.MAX_VALUE))
+                .addContainerGap(468, Short.MAX_VALUE))
         );
         jPanelRegisterLayout.setVerticalGroup(
             jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1306,7 +1298,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jPasswordFieldRegister2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonRegister)
-                .addContainerGap(320, Short.MAX_VALUE))
+                .addContainerGap(299, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Register", jPanelRegister);
@@ -1338,7 +1330,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSettingsLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(489, Short.MAX_VALUE))
+                .addContainerGap(448, Short.MAX_VALUE))
         );
         jPanelSettingsLayout.setVerticalGroup(
             jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1351,7 +1343,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jTextFieldRemoveUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonRemoveAccount)
-                .addContainerGap(411, Short.MAX_VALUE))
+                .addContainerGap(387, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Settings", jPanelSettings);
@@ -1395,7 +1387,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(jPanelReturnRentLayout.createSequentialGroup()
                         .addGap(438, 438, 438)
                         .addComponent(jLabel81)))
-                .addContainerGap(510, Short.MAX_VALUE))
+                .addContainerGap(472, Short.MAX_VALUE))
         );
         jPanelReturnRentLayout.setVerticalGroup(
             jPanelReturnRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1412,7 +1404,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jTextFieldReturnRentedID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonReturnRent)
-                .addContainerGap(373, Short.MAX_VALUE))
+                .addContainerGap(348, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Return Rented Item", jPanelReturnRent);
@@ -1438,7 +1430,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             .addGroup(jPanelReturnProductLayout.createSequentialGroup()
                 .addGap(455, 455, 455)
                 .addComponent(jLabel89)
-                .addGap(0, 521, Short.MAX_VALUE))
+                .addGap(0, 482, Short.MAX_VALUE))
             .addGroup(jPanelReturnProductLayout.createSequentialGroup()
                 .addGroup(jPanelReturnProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelReturnProductLayout.createSequentialGroup()
@@ -1471,7 +1463,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jTextFieldReturnProductItemID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonReturnProduct)
-                .addContainerGap(373, Short.MAX_VALUE))
+                .addContainerGap(348, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Return Product", jPanelReturnProduct);
@@ -1495,7 +1487,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             .addGroup(jPanelListUsersLayout.createSequentialGroup()
                 .addGap(449, 449, 449)
                 .addComponent(jLabel93)
-                .addContainerGap(545, Short.MAX_VALUE))
+                .addContainerGap(506, Short.MAX_VALUE))
             .addGroup(jPanelListUsersLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2)
@@ -1533,7 +1525,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             .addGroup(jPanelListStockLayout.createSequentialGroup()
                 .addGap(449, 449, 449)
                 .addComponent(jLabel94)
-                .addContainerGap(544, Short.MAX_VALUE))
+                .addContainerGap(507, Short.MAX_VALUE))
             .addComponent(jScrollPane3)
         );
         jPanelListStockLayout.setVerticalGroup(
@@ -1568,7 +1560,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             .addGroup(jPanelOverdueLayout.createSequentialGroup()
                 .addGap(434, 434, 434)
                 .addComponent(jLabel95)
-                .addContainerGap(533, Short.MAX_VALUE))
+                .addContainerGap(495, Short.MAX_VALUE))
             .addGroup(jPanelOverdueLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane5)
@@ -1613,7 +1605,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(jPanelLogoutLayout.createSequentialGroup()
                         .addGap(418, 418, 418)
                         .addComponent(jLabel6)))
-                .addContainerGap(478, Short.MAX_VALUE))
+                .addContainerGap(451, Short.MAX_VALUE))
         );
         jPanelLogoutLayout.setVerticalGroup(
             jPanelLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1624,7 +1616,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addGap(38, 38, 38)
                 .addComponent(jButtonLogout)
-                .addContainerGap(419, Short.MAX_VALUE))
+                .addContainerGap(388, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
@@ -1632,31 +1624,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jTabbedPane523.addTab("Login/Register", jTabbedPaneLoginRegister);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane523, javax.swing.GroupLayout.PREFERRED_SIZE, 1071, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane523, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 601, Short.MAX_VALUE))))
-        );
+        getContentPane().add(jTabbedPane523, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 11, 1040, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -2016,7 +1984,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
@@ -2067,7 +2034,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel79;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
