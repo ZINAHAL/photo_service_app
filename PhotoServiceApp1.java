@@ -122,7 +122,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             int numberOfColumns4 = metaData4.getColumnCount();
             //String s3 = String.valueOf(numberOfColumns4);
             StringBuilder sb3 = new StringBuilder(numberOfColumns4);
-            for (int i = 1; i <= numberOfColumns3; i++) {
+            for (int i = 1; i <= numberOfColumns4; i++) {
                     sb3.append(metaData4.getColumnName(i) + "    ");
             }
             while (resultOverdue.next()) {
@@ -402,24 +402,24 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jPasswordFieldRegister2 = new javax.swing.JPasswordField();
         jButtonRegister = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jTextField5 = new javax.swing.JTextField();
-        jButton16 = new javax.swing.JButton();
+        jTextFieldRemoveUsername = new javax.swing.JTextField();
+        jButtonRemoveAccount = new javax.swing.JButton();
         jLabel46 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jTextField6 = new javax.swing.JTextField();
+        jTextFieldReturnRentedUsername = new javax.swing.JTextField();
         jLabel40 = new javax.swing.JLabel();
-        jButton17 = new javax.swing.JButton();
+        jButtonReturnRent = new javax.swing.JButton();
         jLabel81 = new javax.swing.JLabel();
         jLabel85 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        jTextFieldReturnRentedID = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
-        jButton18 = new javax.swing.JButton();
+        jButtonReturnProduct = new javax.swing.JButton();
         jLabel89 = new javax.swing.JLabel();
         jLabel91 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        jTextFieldReturnProductUsername = new javax.swing.JTextField();
         jLabel92 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
+        jTextFieldReturnProductItemID = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel93 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -1222,14 +1222,16 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             }
         });
 
-        jPasswordFieldLogin.setText("jPasswordField1");
-
         jLabel34.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel34.setText("Login Page");
 
         jLabel35.setText("Username");
 
-        jTextFieldLoginUsername.setText("jTextField1");
+        jTextFieldLoginUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldLoginUsernameActionPerformed(evt);
+            }
+        });
 
         jLabel36.setText("Password");
 
@@ -1238,20 +1240,16 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(462, 462, 462)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButtonLogin)
-                        .addComponent(jPasswordFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldLoginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(519, Short.MAX_VALUE))
+                .addGap(463, 463, 463)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordFieldLogin, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextFieldLoginUsername, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                    .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(527, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1278,15 +1276,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jLabel3.setText("Username");
 
-        jTextFieldUserRegister.setText("jTextField1");
-
         jLabel4.setText("Password");
 
-        jPasswordFieldRegister1.setText("jPasswordField1");
-
         jLabel5.setText("Password Again");
-
-        jPasswordFieldRegister2.setText("jPasswordField3");
 
         jButtonRegister.setText("Register");
         jButtonRegister.addActionListener(new java.awt.event.ActionListener() {
@@ -1301,21 +1293,18 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGap(471, 471, 471)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldUserRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPasswordFieldRegister2, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPasswordFieldRegister1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jButtonRegister)))
+                    .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(jPasswordFieldRegister2)
+                    .addComponent(jPasswordFieldRegister1)
+                    .addComponent(jTextFieldUserRegister)
+                    .addComponent(jButtonRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(509, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
@@ -1335,16 +1324,19 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordFieldRegister2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonRegister)
-                .addContainerGap(1141, Short.MAX_VALUE))
+                .addContainerGap(1129, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Register", jPanel11);
 
-        jTextField5.setText("jTextField1");
-
-        jButton16.setText("Remove Account");
+        jButtonRemoveAccount.setText("Remove Account");
+        jButtonRemoveAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRemoveAccountActionPerformed(evt);
+            }
+        });
 
         jLabel46.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel46.setText("Settings");
@@ -1359,16 +1351,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(462, 462, 462)
-                        .addComponent(jButton16))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(485, 485, 485)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jTextFieldRemoveUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonRemoveAccount)
+                            .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(489, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -1379,22 +1368,20 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel55)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton16)
-                .addContainerGap(1232, Short.MAX_VALUE))
+                .addComponent(jTextFieldRemoveUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonRemoveAccount)
+                .addContainerGap(1220, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Settings", jPanel3);
 
-        jTextField6.setText("jTextField1");
-
         jLabel40.setText("Item ID");
 
-        jButton17.setText("Return");
-        jButton17.addActionListener(new java.awt.event.ActionListener() {
+        jButtonReturnRent.setText("Return");
+        jButtonReturnRent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton17ActionPerformed(evt);
+                jButtonReturnRentActionPerformed(evt);
             }
         });
 
@@ -1403,10 +1390,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jLabel85.setText("Username");
 
-        jTextField13.setText("jTextField13");
-        jTextField13.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldReturnRentedID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField13ActionPerformed(evt);
+                jTextFieldReturnRentedIDActionPerformed(evt);
             }
         });
 
@@ -1415,19 +1401,19 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(462, 462, 462)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel85, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton17))
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(438, 438, 438)
-                .addComponent(jLabel81)
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(462, 462, 462)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldReturnRentedUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel85, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonReturnRent)
+                            .addComponent(jTextFieldReturnRentedID, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(438, 438, 438)
+                        .addComponent(jLabel81)))
+                .addContainerGap(510, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1437,49 +1423,56 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel85)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldReturnRentedUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel40)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jButton17)
-                .addContainerGap(1190, Short.MAX_VALUE))
+                .addComponent(jTextFieldReturnRentedID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonReturnRent)
+                .addContainerGap(1182, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Return Rented Item", jPanel4);
 
-        jButton18.setText("Return");
+        jButtonReturnProduct.setText("Return");
+        jButtonReturnProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReturnProductActionPerformed(evt);
+            }
+        });
 
         jLabel89.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel89.setText("Return Product");
 
         jLabel91.setText("Username");
 
-        jTextField9.setText("jTextField1");
-
         jLabel92.setText("Item ID");
-
-        jTextField16.setText("jTextField13");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(462, 462, 462)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel92, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel91, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton18))
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(455, 455, 455)
                 .addComponent(jLabel89)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 521, Short.MAX_VALUE))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtonReturnProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
+                        .addGap(462, 462, 462)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel92, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldReturnProductUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel91, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldReturnProductItemID, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1489,13 +1482,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel91)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldReturnProductUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel92)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldReturnProductItemID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jButton18)
+                .addComponent(jButtonReturnProduct)
                 .addContainerGap(1190, Short.MAX_VALUE))
         );
 
@@ -1712,13 +1705,45 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton15ActionPerformed
 
-    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+    private void jButtonReturnRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnRentActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton17ActionPerformed
+        String returnRentUsername = jTextFieldReturnRentedUsername.getText();
+        String returnRentID = jTextFieldReturnRentedID.getText();
+        ResultSet rs;
+        PreparedStatement pStatement;
+        if(returnRentUsername.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Add A Username");
+        }
+        else if(returnRentID.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Add an ItemID");
+        }
+        else{
+            String query = "DELETE FROM Rent WHERE EXISTS(SELECT clientID, itemID "
+                    + "FROM Client C, ItemsToRent IR WHERE C.clientID = Rent.clientID "
+                    + "AND C.username = ? AND Rent.itemID = IR.itemID AND IR.itemID = ?)";
+            try {
+                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+                pStatement.setString(1, returnRentUsername);
+                pStatement.setString(2, returnRentID);
+                //rs = statement.executeQuery(query);
+                //rs = pStatement.executeQuery();
 
-    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
+                if(pStatement.executeUpdate() > 0)
+                {
+                    JOptionPane.showMessageDialog(null, "Rented item returned!");
+                }
+
+            } catch (SQLException sqlex) {
+                System.err.println(sqlex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButtonReturnRentActionPerformed
+
+    private void jTextFieldReturnRentedIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldReturnRentedIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField13ActionPerformed
+    }//GEN-LAST:event_jTextFieldReturnRentedIDActionPerformed
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         // TODO add your handling code here:
@@ -1751,39 +1776,44 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
         // TODO add your handling code here:
-        String uname = jTextFieldUserRegister.getText();
-        String pass = String.valueOf(jPasswordFieldRegister1.getPassword());
-        String re_pass = String.valueOf(jPasswordFieldRegister2.getPassword());
+        String registerUsername = jTextFieldUserRegister.getText();
+        String registerPassword = String.valueOf(jPasswordFieldRegister1.getPassword());
+        String registerRe_Password = String.valueOf(jPasswordFieldRegister2.getPassword());
         Statement statement;
+        PreparedStatement pStatement;
         ResultSet rs;
                 
-        if(uname.equals(""))
+        if(registerUsername.equals(""))
         {
             JOptionPane.showMessageDialog(null, "Add A Username");
         }
         
-        else if(pass.equals(""))
+        else if(registerPassword.equals(""))
         {
             JOptionPane.showMessageDialog(null, "Add A Password");
         }
-        else if(!pass.equals(re_pass))
+        else if(!registerPassword.equals(registerRe_Password))
         {
             JOptionPane.showMessageDialog(null, "Retype The Password Again");
         }
         
-        else if(checkUsername(uname))
+        else if(checkUsername(registerUsername))
         {
             JOptionPane.showMessageDialog(null, "This Username Already Exist");
         }
         
         else{
-            String query = "INSERT INTO Client(0," + uname +"," + pass + ")";
+            String query = "INSERT INTO Client(username, password) VALUES(?, ?)";
 
             try {
-                statement = PhotoServiceApp1.getConnection().createStatement();
-                rs = statement.executeQuery(query);
+                //statement = PhotoServiceApp1.getConnection().createStatement();
+                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+                pStatement.setString(1, registerUsername);
+                pStatement.setString(2, registerPassword);
+                //rs = statement.executeQuery(query);
+                //rs = pStatement.executeQuery();
 
-                if(rs.rowUpdated() == true)
+                if(pStatement.executeUpdate() > 0)
                 {
                     JOptionPane.showMessageDialog(null, "New User Add");
                 }
@@ -1793,6 +1823,76 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             }
         }            
     }//GEN-LAST:event_jButtonRegisterActionPerformed
+
+    private void jButtonRemoveAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveAccountActionPerformed
+        // TODO add your handling code here:
+        String jTextFieldRemoveUsername = jTextFieldUserRegister.getText();
+        PreparedStatement pStatement;
+        
+        if(jTextFieldRemoveUsername.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Add A Username");
+        }
+        else{
+            String query = "DELETE FROM Client WHERE username = ?";
+
+            try {
+                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+                pStatement.setString(1, jTextFieldRemoveUsername);
+                //rs = statement.executeQuery(query);
+                //rs = pStatement.executeQuery();
+
+                if(pStatement.executeUpdate() > 0)
+                {
+                    JOptionPane.showMessageDialog(null, "User Deleted!");
+                }
+
+            } catch (SQLException sqlex) {
+                System.err.println(sqlex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButtonRemoveAccountActionPerformed
+
+    private void jTextFieldLoginUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldLoginUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldLoginUsernameActionPerformed
+
+    private void jButtonReturnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnProductActionPerformed
+        // TODO add your handling code here:
+        String returnProducttUsername = jTextFieldReturnProductUsername.getText();
+        String returnProductID = jTextFieldReturnProductItemID.getText();
+        ResultSet rs;
+        PreparedStatement pStatement;
+        if(returnProducttUsername.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Add A Username");
+        }
+        else if(returnProductID.equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Add an ItemID");
+        }
+        else{
+            String query = "DELETE FROM ItemsToSell WHERE EXISTS(SELECT itemID, clientID, stockName "
+                    + "FROM Client C, StockDetails SD WHERE C.clientID = ItemsToSell.clientID "
+                    + "AND C.username = ? AND ItemsToSell.itemID = ? "
+                    + "AND ItemsToSell.stockName = SD.stockName)";
+            try {
+                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+                pStatement.setString(1, returnProducttUsername);
+                pStatement.setString(2, returnProductID);
+                //rs = statement.executeQuery(query);
+                //rs = pStatement.executeQuery();
+
+                if(pStatement.executeUpdate() > 0)
+                {
+                    JOptionPane.showMessageDialog(null, "Product item returned!");
+                }
+
+            } catch (SQLException sqlex) {
+                System.err.println(sqlex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_jButtonReturnProductActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1837,9 +1937,6 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -1849,6 +1946,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonLogin;
     private javax.swing.JButton jButtonRegister;
+    private javax.swing.JButton jButtonRemoveAccount;
+    private javax.swing.JButton jButtonReturnProduct;
+    private javax.swing.JButton jButtonReturnRent;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
@@ -1980,18 +2080,18 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField jTextFieldLoginUsername;
+    private javax.swing.JTextField jTextFieldRemoveUsername;
+    private javax.swing.JTextField jTextFieldReturnProductItemID;
+    private javax.swing.JTextField jTextFieldReturnProductUsername;
+    private javax.swing.JTextField jTextFieldReturnRentedID;
+    private javax.swing.JTextField jTextFieldReturnRentedUsername;
     private javax.swing.JTextField jTextFieldUserRegister;
     private java.awt.PopupMenu popupMenu1;
     private java.awt.PopupMenu popupMenu2;
