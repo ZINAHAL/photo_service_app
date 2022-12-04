@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import javax.swing.DefaultComboBoxModel;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+//import javax.activation.DataHandler;
+
 /**
  *
  * @author Kenneth Mallabo & Zinah Al-Baghdadi
@@ -32,11 +34,11 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         ResultSet resultUsers;
         ResultSet resultStocks;
         ResultSet resultOverdue;
-        String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
-        String dbURL = "jdbc:ucanaccess://" + msAccDB;
+        //String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
+        //String dbURL = "jdbc:ucanaccess://" + msAccDB;
     
-//        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
-//        String dbURL = "jdbc:ucanaccess://" + msAccDB;
+        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
+        String dbURL = "jdbc:ucanaccess://" + msAccDB;
 
         // Step 1: Loading or registering JDBC driver class
         try {
@@ -156,12 +158,14 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         initComponents();
     }
     
-    // method to get connection to the database
+    // method to get connection to the database (Reference: https://1bestcsharp.blogspot.com/2018/05/java-login-and-register-form-with-mysql-database.html )
      public static Connection getConnection(){ 
         // variables
         Connection connection = null;
         
-        String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
+        //String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
+        //String dbURL = "jdbc:ucanaccess://" + msAccDB;
+        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
         String dbURL = "jdbc:ucanaccess://" + msAccDB;
     
         // Step 1: Loading or registering JDBC driver class
@@ -183,7 +187,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         return connection;
     }
     
-    // checks if user already exists in the database for registration
+    // checks if user already exists in the database for registration (Reference: https://1bestcsharp.blogspot.com/2018/05/java-login-and-register-form-with-mysql-database.html )
     public boolean checkUsername(String username)
     {
         // variables
@@ -1167,10 +1171,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     // set parameters
                     pStatement.setString(1, returnRentUsername);
                     pStatement.setString(2, returnRentID);
-                    // execute SQL query & check if the database has updated, inform user of success
+                    // execute SQL query & check if the database has updated, inform user of success or failure
                     if(pStatement.executeUpdate() > 0)
                     {
                         JOptionPane.showMessageDialog(null, "Rented item returned!");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Rented item does not exist!");
                     }
 
                 } catch (SQLException sqlex) {
@@ -1186,6 +1193,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         // TODO add your handling code here:
+        //(Reference: https://1bestcsharp.blogspot.com/2018/05/java-login-and-register-form-with-mysql-database.html )
         // variables
         String loginUsername = jTextFieldLoginUsername.getText();
         String loginPassword = String.valueOf(jPasswordFieldLogin.getPassword());
@@ -1203,37 +1211,51 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             pStatement.setString(2, loginPassword);
             // execute SQL query
             rs = pStatement.executeQuery();
-            // check if there are data from the Client table
-            if(rs.next()) {
-                JOptionPane.showMessageDialog(null, "User Login successful");  
-                jTabbedPaneLoginRegister.remove(jPanelLogin);
-                jTabbedPaneLoginRegister.remove(jPanelRegister);
-                jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
-            }          
-            else {
-                //Creating JDBC prepare Statement
-                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query2);
-                // set parameters
-                pStatement.setString(1, loginUsername);
-                pStatement.setString(2, loginPassword);
-                // execute SQL query
-                rs = pStatement.executeQuery();
-                // check if there are data from the Admin table
+            
+            // if username field is empty, tell user to insert it
+            if(loginUsername.equals(""))
+            {
+                JOptionPane.showMessageDialog(null, "Add a Username");
+            }
+            // if password field is empty, tell user to insert it
+            else if(loginPassword.equals(""))
+            {
+                JOptionPane.showMessageDialog(null, "Add a password");
+            }
+            else
+            {
+                // check if there are data from the Client table
                 if(rs.next()) {
-                    JOptionPane.showMessageDialog(null, "Admin login successful");
-                    jTabbedPaneLoginRegister.addTab("Settings", jPanelSettings);
-                    jTabbedPaneLoginRegister.addTab("List of Users", jPanelListUsers);
-                    jTabbedPaneLoginRegister.addTab("List of Stock", jPanelListStock);
-                    jTabbedPaneLoginRegister.addTab("Overdue Rentals", jPanelOverdue);
-                    jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
+                    JOptionPane.showMessageDialog(null, "User Login successful");  
                     jTabbedPaneLoginRegister.remove(jPanelLogin);
-                    jTabbedPaneLoginRegister.remove(jPanelRegister); 
-                    jTabbedPaneLoginRegister.remove(jPanelReturnRent);
-                    jTabbedPaneLoginRegister.remove(jPanelReturnProduct);
-                } 
-                // inform user that the inputed data has not been found
+                    jTabbedPaneLoginRegister.remove(jPanelRegister);
+                    jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
+                }          
                 else {
-                    JOptionPane.showMessageDialog(null, "Incorrect username or password");
+                    //Creating JDBC prepare Statement
+                    pStatement = PhotoServiceApp1.getConnection().prepareStatement(query2);
+                    // set parameters
+                    pStatement.setString(1, loginUsername);
+                    pStatement.setString(2, loginPassword);
+                    // execute SQL query
+                    rs = pStatement.executeQuery();
+                    // check if there are data from the Admin table
+                    if(rs.next()) {
+                        JOptionPane.showMessageDialog(null, "Admin login successful");
+                        jTabbedPaneLoginRegister.addTab("Settings", jPanelSettings);
+                        jTabbedPaneLoginRegister.addTab("List of Users", jPanelListUsers);
+                        jTabbedPaneLoginRegister.addTab("List of Stock", jPanelListStock);
+                        jTabbedPaneLoginRegister.addTab("Overdue Rentals", jPanelOverdue);
+                        jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
+                        jTabbedPaneLoginRegister.remove(jPanelLogin);
+                        jTabbedPaneLoginRegister.remove(jPanelRegister); 
+                        jTabbedPaneLoginRegister.remove(jPanelReturnRent);
+                        jTabbedPaneLoginRegister.remove(jPanelReturnProduct);
+                    } 
+                    // inform user that the inputed data has not been found
+                    else {
+                        JOptionPane.showMessageDialog(null, "Incorrect username or password");
+                    }
                 }
             }
         } catch (SQLException sqlex) {
@@ -1243,6 +1265,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
         // TODO add your handling code here:
+        //(Reference: https://1bestcsharp.blogspot.com/2018/05/java-login-and-register-form-with-mysql-database.html )
         // variables
         String registerUsername = jTextFieldUserRegister.getText();
         String registerPassword = String.valueOf(jPasswordFieldRegister1.getPassword());
@@ -1293,7 +1316,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private void jButtonRemoveAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveAccountActionPerformed
         // TODO add your handling code here:
         // variables
-        String jTextFieldRemoveUsername = jTextFieldUserRegister.getText();
+        String removeUserName = jTextFieldRemoveUsername.getText();
         PreparedStatement pStatement;
         // initialise SQL query string
         String query = "DELETE FROM Client WHERE username = ?";
@@ -1305,7 +1328,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         if(result == JOptionPane.YES_OPTION)
         {
             // check if inputted username is empty, inform user 
-            if(jTextFieldRemoveUsername.equals(""))
+            if(removeUserName.equals(""))
             {
                 JOptionPane.showMessageDialog(null, "Add A Username");
             }
@@ -1314,11 +1337,14 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     //Creating JDBC prepare Statement
                     pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
                     // set parameters
-                    pStatement.setString(1, jTextFieldRemoveUsername);
-                    // execute SQL query & check if the database has updated, inform user of success
+                    pStatement.setString(1, removeUserName);
+                    // execute SQL query & check if the database has updated, inform user of success or failure
                     if(pStatement.executeUpdate() > 0)
                     {
                         JOptionPane.showMessageDialog(null, "User Deleted!");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "User does not exist!");
                     }
 
                 } catch (SQLException sqlex) {
@@ -1367,10 +1393,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     // set parameters
                     pStatement.setString(1, returnProducttUsername);
                     pStatement.setString(2, returnProductID);
-                    // execute SQL query & check if the database has updated, inform user of success
+                    // execute SQL query & check if the database has updated, inform user of success or failure
                     if(pStatement.executeUpdate() > 0)
                     {
                         JOptionPane.showMessageDialog(null, "Product item returned!");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Product does not exist!");
                     }
 
                 } catch (SQLException sqlex) {
@@ -1505,6 +1534,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(PhotoServiceApp1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
