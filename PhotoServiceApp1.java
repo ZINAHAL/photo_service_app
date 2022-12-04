@@ -1,8 +1,8 @@
-package com.photoserviceproject;
-
 /*
- * Example for ResultSetMetaData
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+package com.photoserviceproject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,7 +30,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         ResultSet resultUsers;
         ResultSet resultStocks;
         ResultSet resultOverdue;
-        String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
+        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
         String dbURL = "jdbc:ucanaccess://" + msAccDB;
 
         // Step 1: Loading or registering JDBC driver class
@@ -156,8 +156,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         // variables
         Connection connection = null;
         
-        String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
+        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
         String dbURL = "jdbc:ucanaccess://" + msAccDB;
+
         // Step 1: Loading or registering JDBC driver class
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
@@ -268,8 +269,12 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jPopupMenu7 = new javax.swing.JPopupMenu();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jTabbedPane523 = new javax.swing.JTabbedPane();
         jPanel12 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        jTextArea13 = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
@@ -512,19 +517,40 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jLabel15.setText("jLabel15");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 570));
-        setSize(new java.awt.Dimension(1000, 700));
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setText("Photo Service");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setText("Welcome to Photo Service!");
+
+        jTextArea13.setEditable(false);
+        jTextArea13.setColumns(20);
+        jTextArea13.setRows(5);
+        jTextArea13.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. \nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum");
+        jScrollPane14.setViewportView(jTextArea13);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1035, Short.MAX_VALUE)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(376, 376, 376)
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel12Layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 572, Short.MAX_VALUE)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addGap(89, 89, 89)
+                .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(198, Short.MAX_VALUE))
         );
 
         jTabbedPane523.addTab("Home", jPanel12);
@@ -853,7 +879,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(890, Short.MAX_VALUE)
+                    .addContainerGap(888, Short.MAX_VALUE)
                     .addComponent(jButton12)
                     .addGap(662, 662, 662)))
         );
@@ -983,11 +1009,11 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel45)
                             .addComponent(jLabel51))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel47)
                             .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addContainerGap(157, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(843, 843, 843)
@@ -1126,7 +1152,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(862, 862, 862)
                         .addComponent(jButton15)))
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1221,7 +1247,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addComponent(jTextFieldLoginUsername, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
                     .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(486, Short.MAX_VALUE))
+                .addContainerGap(527, Short.MAX_VALUE))
         );
         jPanelLoginLayout.setVerticalGroup(
             jPanelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1238,7 +1264,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jPasswordFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonLogin)
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addContainerGap(373, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Login", jPanelLogin);
@@ -1277,7 +1303,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addComponent(jPasswordFieldRegister1)
                     .addComponent(jTextFieldUserRegister)
                     .addComponent(jButtonRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(468, Short.MAX_VALUE))
+                .addContainerGap(509, Short.MAX_VALUE))
         );
         jPanelRegisterLayout.setVerticalGroup(
             jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1298,7 +1324,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jPasswordFieldRegister2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonRegister)
-                .addContainerGap(299, Short.MAX_VALUE))
+                .addContainerGap(320, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Register", jPanelRegister);
@@ -1330,7 +1356,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSettingsLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(448, Short.MAX_VALUE))
+                .addContainerGap(489, Short.MAX_VALUE))
         );
         jPanelSettingsLayout.setVerticalGroup(
             jPanelSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1343,7 +1369,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jTextFieldRemoveUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonRemoveAccount)
-                .addContainerGap(387, Short.MAX_VALUE))
+                .addContainerGap(411, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Settings", jPanelSettings);
@@ -1387,7 +1413,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(jPanelReturnRentLayout.createSequentialGroup()
                         .addGap(438, 438, 438)
                         .addComponent(jLabel81)))
-                .addContainerGap(472, Short.MAX_VALUE))
+                .addContainerGap(510, Short.MAX_VALUE))
         );
         jPanelReturnRentLayout.setVerticalGroup(
             jPanelReturnRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1404,7 +1430,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jTextFieldReturnRentedID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonReturnRent)
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addContainerGap(373, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Return Rented Item", jPanelReturnRent);
@@ -1430,7 +1456,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             .addGroup(jPanelReturnProductLayout.createSequentialGroup()
                 .addGap(455, 455, 455)
                 .addComponent(jLabel89)
-                .addGap(0, 482, Short.MAX_VALUE))
+                .addGap(0, 521, Short.MAX_VALUE))
             .addGroup(jPanelReturnProductLayout.createSequentialGroup()
                 .addGroup(jPanelReturnProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelReturnProductLayout.createSequentialGroup()
@@ -1463,7 +1489,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jTextFieldReturnProductItemID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonReturnProduct)
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addContainerGap(373, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Return Product", jPanelReturnProduct);
@@ -1487,7 +1513,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             .addGroup(jPanelListUsersLayout.createSequentialGroup()
                 .addGap(449, 449, 449)
                 .addComponent(jLabel93)
-                .addContainerGap(506, Short.MAX_VALUE))
+                .addContainerGap(545, Short.MAX_VALUE))
             .addGroup(jPanelListUsersLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2)
@@ -1525,7 +1551,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             .addGroup(jPanelListStockLayout.createSequentialGroup()
                 .addGap(449, 449, 449)
                 .addComponent(jLabel94)
-                .addContainerGap(507, Short.MAX_VALUE))
+                .addContainerGap(544, Short.MAX_VALUE))
             .addComponent(jScrollPane3)
         );
         jPanelListStockLayout.setVerticalGroup(
@@ -1560,7 +1586,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             .addGroup(jPanelOverdueLayout.createSequentialGroup()
                 .addGap(434, 434, 434)
                 .addComponent(jLabel95)
-                .addContainerGap(495, Short.MAX_VALUE))
+                .addContainerGap(533, Short.MAX_VALUE))
             .addGroup(jPanelOverdueLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane5)
@@ -1605,7 +1631,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addGroup(jPanelLogoutLayout.createSequentialGroup()
                         .addGap(418, 418, 418)
                         .addComponent(jLabel6)))
-                .addContainerGap(451, Short.MAX_VALUE))
+                .addContainerGap(478, Short.MAX_VALUE))
         );
         jPanelLogoutLayout.setVerticalGroup(
             jPanelLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1616,7 +1642,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addGap(38, 38, 38)
                 .addComponent(jButtonLogout)
-                .addContainerGap(388, Short.MAX_VALUE))
+                .addContainerGap(419, Short.MAX_VALUE))
         );
 
         jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
@@ -1624,7 +1650,27 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jTabbedPane523.addTab("Login/Register", jTabbedPaneLoginRegister);
 
-        getContentPane().add(jTabbedPane523, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 11, 1040, 600));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane523, javax.swing.GroupLayout.PREFERRED_SIZE, 1071, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane523, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 601, Short.MAX_VALUE))))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1703,33 +1749,48 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
     private void jButtonReturnRentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnRentActionPerformed
         // TODO add your handling code here:
+        // variables
         String returnRentUsername = jTextFieldReturnRentedUsername.getText();
         String returnRentID = jTextFieldReturnRentedID.getText();
         PreparedStatement pStatement;
-        if(returnRentUsername.equals(""))
+        // initialise SQL query string
+        String query = "DELETE FROM Rent WHERE EXISTS(SELECT clientID, itemID "
+                        + "FROM Client C, ItemsToRent IR WHERE C.clientID = Rent.clientID "
+                        + "AND C.username = ? AND Rent.itemID = IR.itemID AND IR.itemID = ?)";
+        
+        // use popup to tell user if they are sure of their action
+        int result = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to return your rented item?", "Return rental",JOptionPane.YES_NO_OPTION,
+               JOptionPane.QUESTION_MESSAGE);
+        // if user selects yes
+        if(result == JOptionPane.YES_OPTION)
         {
-            JOptionPane.showMessageDialog(null, "Add A Username");
-        }
-        else if(returnRentID.equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Add an ItemID");
-        }
-        else{
-            String query = "DELETE FROM Rent WHERE EXISTS(SELECT clientID, itemID "
-                    + "FROM Client C, ItemsToRent IR WHERE C.clientID = Rent.clientID "
-                    + "AND C.username = ? AND Rent.itemID = IR.itemID AND IR.itemID = ?)";
-            try {
-                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
-                pStatement.setString(1, returnRentUsername);
-                pStatement.setString(2, returnRentID);
+            // if username field is empty, tell user to insert it
+            if(returnRentUsername.equals(""))
+            {
+                JOptionPane.showMessageDialog(null, "Add A Username");
+            }
+            // if return field is empty, tell user to insert it
+            else if(returnRentID.equals(""))
+            {
+                JOptionPane.showMessageDialog(null, "Add an ItemID");
+            }
+            else{
+                try {
+                    //Creating JDBC prepare Statement
+                    pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+                    // set parameters
+                    pStatement.setString(1, returnRentUsername);
+                    pStatement.setString(2, returnRentID);
+                    // execute SQL query & check if the database has updated, inform user of success
+                    if(pStatement.executeUpdate() > 0)
+                    {
+                        JOptionPane.showMessageDialog(null, "Rented item returned!");
+                    }
 
-                if(pStatement.executeUpdate() > 0)
-                {
-                    JOptionPane.showMessageDialog(null, "Rented item returned!");
+                } catch (SQLException sqlex) {
+                    System.err.println(sqlex.getMessage());
                 }
-
-            } catch (SQLException sqlex) {
-                System.err.println(sqlex.getMessage());
             }
         }
     }//GEN-LAST:event_jButtonReturnRentActionPerformed
@@ -1740,46 +1801,56 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
         // TODO add your handling code here:
+        // variables
         String loginUsername = jTextFieldLoginUsername.getText();
         String loginPassword = String.valueOf(jPasswordFieldLogin.getPassword());
         ResultSet rs;
         PreparedStatement pStatement;
-        
+        // initialise SQL query string
         String query = "SELECT * FROM Client WHERE username = ? AND password = ?"; 
+        String query2 = "SELECT * FROM Admin WHERE username = ? AND password = ?"; 
+        
         try {
-                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+            //Creating JDBC prepare Statement
+            pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+            // set parameters
+            pStatement.setString(1, loginUsername);
+            pStatement.setString(2, loginPassword);
+            // execute SQL query
+            rs = pStatement.executeQuery();
+            // check if there are data from the Client table
+            if(rs.next()) {
+                JOptionPane.showMessageDialog(null, "User Login successful");  
+                jTabbedPaneLoginRegister.remove(jPanelLogin);
+                jTabbedPaneLoginRegister.remove(jPanelRegister);
+                jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
+            }          
+            else {
+                //Creating JDBC prepare Statement
+                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query2);
+                // set parameters
                 pStatement.setString(1, loginUsername);
                 pStatement.setString(2, loginPassword);
+                // execute SQL query
                 rs = pStatement.executeQuery();
-                
+                // check if there are data from the Admin table
                 if(rs.next()) {
-                    JOptionPane.showMessageDialog(null, "User Login successful");  
-                    jTabbedPaneLoginRegister.remove(jPanelLogin);
-                    jTabbedPaneLoginRegister.remove(jPanelRegister);
+                    JOptionPane.showMessageDialog(null, "Admin login successful");
+                    jTabbedPaneLoginRegister.addTab("Settings", jPanelSettings);
+                    jTabbedPaneLoginRegister.addTab("List of Users", jPanelListUsers);
+                    jTabbedPaneLoginRegister.addTab("List of Stock", jPanelListStock);
+                    jTabbedPaneLoginRegister.addTab("Overdue Rentals", jPanelOverdue);
                     jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
+                    jTabbedPaneLoginRegister.remove(jPanelLogin);
+                    jTabbedPaneLoginRegister.remove(jPanelRegister); 
+                    jTabbedPaneLoginRegister.remove(jPanelReturnRent);
+                    jTabbedPaneLoginRegister.remove(jPanelReturnProduct);
                 } 
+                // inform user that the inputed data has not been found
                 else {
-                    String query2 = "SELECT * FROM Admin WHERE username = ? AND password = ?"; 
-                    pStatement = PhotoServiceApp1.getConnection().prepareStatement(query2);
-                    pStatement.setString(1, loginUsername);
-                    pStatement.setString(2, loginPassword);
-                    rs = pStatement.executeQuery();
-                    if(rs.next()) {
-                        JOptionPane.showMessageDialog(null, "Admin login successful");
-                        jTabbedPaneLoginRegister.addTab("Settings", jPanelSettings);
-                        jTabbedPaneLoginRegister.addTab("List of Users", jPanelListUsers);
-                        jTabbedPaneLoginRegister.addTab("List of Stock", jPanelListStock);
-                        jTabbedPaneLoginRegister.addTab("Overdue Rentals", jPanelOverdue);
-                        jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
-                        jTabbedPaneLoginRegister.remove(jPanelLogin);
-                        jTabbedPaneLoginRegister.remove(jPanelRegister); 
-                        jTabbedPaneLoginRegister.remove(jPanelReturnRent);
-                        jTabbedPaneLoginRegister.remove(jPanelReturnProduct);
-                    } 
-                    else {
-                        JOptionPane.showMessageDialog(null, "Incorrect username or password");
-                    }
+                    JOptionPane.showMessageDialog(null, "Incorrect username or password");
                 }
+            }
         } catch (SQLException sqlex) {
              System.err.println(sqlex.getMessage());
         }
@@ -1787,40 +1858,42 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
         // TODO add your handling code here:
+        // variables
         String registerUsername = jTextFieldUserRegister.getText();
         String registerPassword = String.valueOf(jPasswordFieldRegister1.getPassword());
         String registerRe_Password = String.valueOf(jPasswordFieldRegister2.getPassword());
         PreparedStatement pStatement;
-        
-        System.out.println(checkUsername(registerUsername));
-                
+        // initialise SQL query string
+        String query = "INSERT INTO Client(username, password) VALUES(?, ?)";
+        // check if inputted username is empty, inform user        
         if(registerUsername.equals(""))
         {
             JOptionPane.showMessageDialog(null, "Add A Username");
         }
-        
+        // check if inputted password is empty, inform user 
         else if(registerPassword.equals(""))
         {
             JOptionPane.showMessageDialog(null, "Add A Password");
         }
+        // check if inputted password is not the same as the other, inform user 
         else if(!registerPassword.equals(registerRe_Password))
         {
             JOptionPane.showMessageDialog(null, "Retype The Password Again");
         }
-        
+        // check if inputted username already exists, inform user 
         else if(checkUsername(registerUsername) == true)
         {
             JOptionPane.showMessageDialog(null, "This Username Already Exist");
         }
         
         else{
-            String query = "INSERT INTO Client(username, password) VALUES(?, ?)";
-
             try {
+                //Creating JDBC prepare Statement
                 pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+                // set parameters
                 pStatement.setString(1, registerUsername);
                 pStatement.setString(2, registerPassword);
-
+                // execute SQL query & check if the database has updated, inform user of success
                 if(pStatement.executeUpdate() > 0)
                 {
                     JOptionPane.showMessageDialog(null, "New User Added");
@@ -1834,29 +1907,38 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
     private void jButtonRemoveAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoveAccountActionPerformed
         // TODO add your handling code here:
+        // variables
         String jTextFieldRemoveUsername = jTextFieldUserRegister.getText();
         PreparedStatement pStatement;
-        
-        if(jTextFieldRemoveUsername.equals(""))
+        // initialise SQL query string
+        String query = "DELETE FROM Client WHERE username = ?";
+        // use popup to tell user if they are sure of their action
+        int result = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to delete this user?", "Delete User",JOptionPane.YES_NO_OPTION,
+               JOptionPane.QUESTION_MESSAGE);
+        // if user selects yes
+        if(result == JOptionPane.YES_OPTION)
         {
-            JOptionPane.showMessageDialog(null, "Add A Username");
-        }
-        else{
-            String query = "DELETE FROM Client WHERE username = ?";
+            // check if inputted username is empty, inform user 
+            if(jTextFieldRemoveUsername.equals(""))
+            {
+                JOptionPane.showMessageDialog(null, "Add A Username");
+            }
+            else{
+                try {
+                    //Creating JDBC prepare Statement
+                    pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+                    // set parameters
+                    pStatement.setString(1, jTextFieldRemoveUsername);
+                    // execute SQL query & check if the database has updated, inform user of success
+                    if(pStatement.executeUpdate() > 0)
+                    {
+                        JOptionPane.showMessageDialog(null, "User Deleted!");
+                    }
 
-            try {
-                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
-                pStatement.setString(1, jTextFieldRemoveUsername);
-                //rs = statement.executeQuery(query);
-                //rs = pStatement.executeQuery();
-
-                if(pStatement.executeUpdate() > 0)
-                {
-                    JOptionPane.showMessageDialog(null, "User Deleted!");
+                } catch (SQLException sqlex) {
+                    System.err.println(sqlex.getMessage());
                 }
-
-            } catch (SQLException sqlex) {
-                System.err.println(sqlex.getMessage());
             }
         }
     }//GEN-LAST:event_jButtonRemoveAccountActionPerformed
@@ -1867,43 +1949,55 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
     private void jButtonReturnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnProductActionPerformed
         // TODO add your handling code here:
+        // variables
         String returnProducttUsername = jTextFieldReturnProductUsername.getText();
         String returnProductID = jTextFieldReturnProductItemID.getText();
-        ResultSet rs;
         PreparedStatement pStatement;
-        if(returnProducttUsername.equals(""))
+        // initialise SQL query string
+        String query = "DELETE FROM ItemsToSell WHERE EXISTS(SELECT itemID, clientID, stockName "
+                        + "FROM Client C, StockDetails SD WHERE C.clientID = ItemsToSell.clientID "
+                        + "AND C.username = ? AND ItemsToSell.itemID = ? "
+                        + "AND ItemsToSell.stockName = SD.stockName)";
+        // use popup to tell user if they are sure of their action
+        int result = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to return your product?", "Return Product",JOptionPane.YES_NO_OPTION,
+               JOptionPane.QUESTION_MESSAGE);
+        // if user selects yes
+        if(result == JOptionPane.YES_OPTION)
         {
-            JOptionPane.showMessageDialog(null, "Add A Username");
-        }
-        else if(returnProductID.equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Add an ItemID");
-        }
-        else{
-            String query = "DELETE FROM ItemsToSell WHERE EXISTS(SELECT itemID, clientID, stockName "
-                    + "FROM Client C, StockDetails SD WHERE C.clientID = ItemsToSell.clientID "
-                    + "AND C.username = ? AND ItemsToSell.itemID = ? "
-                    + "AND ItemsToSell.stockName = SD.stockName)";
-            try {
-                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
-                pStatement.setString(1, returnProducttUsername);
-                pStatement.setString(2, returnProductID);
-                //rs = statement.executeQuery(query);
-                //rs = pStatement.executeQuery();
+            // check if inputted username is empty, inform user 
+            if(returnProducttUsername.equals(""))
+            {
+                JOptionPane.showMessageDialog(null, "Add A Username");
+            }
+            // check if inputted productID is empty, inform user 
+            else if(returnProductID.equals(""))
+            {
+                JOptionPane.showMessageDialog(null, "Add an ItemID");
+            }
+            else{
+                try {
+                    //Creating JDBC prepare Statement
+                    pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
+                    // set parameters
+                    pStatement.setString(1, returnProducttUsername);
+                    pStatement.setString(2, returnProductID);
+                    // execute SQL query & check if the database has updated, inform user of success
+                    if(pStatement.executeUpdate() > 0)
+                    {
+                        JOptionPane.showMessageDialog(null, "Product item returned!");
+                    }
 
-                if(pStatement.executeUpdate() > 0)
-                {
-                    JOptionPane.showMessageDialog(null, "Product item returned!");
+                } catch (SQLException sqlex) {
+                    System.err.println(sqlex.getMessage());
                 }
-
-            } catch (SQLException sqlex) {
-                System.err.println(sqlex.getMessage());
             }
         }
     }//GEN-LAST:event_jButtonReturnProductActionPerformed
 
     private void jButtonLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogoutActionPerformed
         // TODO add your handling code here:
+        // inform user that they have logged out of account
         JOptionPane.showMessageDialog(null, "Logged out of account");
         jTabbedPaneLoginRegister.remove(jPanelLogout);
         jTabbedPaneLoginRegister.remove(jPanelSettings);
@@ -1984,6 +2078,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
@@ -2024,6 +2119,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel69;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
@@ -2083,6 +2179,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
+    private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -2098,6 +2195,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea10;
     private javax.swing.JTextArea jTextArea11;
     private javax.swing.JTextArea jTextArea12;
+    private javax.swing.JTextArea jTextArea13;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea jTextArea4;
