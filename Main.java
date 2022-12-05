@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author Kenneth Mallabo & Zinah Al-Baghdadi
  */
-public class MainApp extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame {
 
     /**
      * Creates new form PhotoServiceApp
@@ -25,7 +25,7 @@ public class MainApp extends javax.swing.JFrame {
     private String[] rentPriceRanges = {null, "rentPrice > 0 AND rentPrice <= 30", "rentPrice > 30 AND rentPrice <= 70", "rentPrice > 70"};
     private String[] sellPriceRanges = {null, "sellPrice > 0 AND sellPrice <= 100", "sellPrice > 100 AND sellPrice <= 500", "sellPrice > 500 AND sellPrice <= 1000", "sellPrice > 1000"};
 
-    public MainApp() {
+    public Main() {
         // initComponents();
         // variables
         Connection connection = null;
@@ -200,7 +200,7 @@ public class MainApp extends javax.swing.JFrame {
         
         try {
             //Creating JDBC prepare Statement
-            pStatement = MainApp.getConnection().prepareStatement(query);
+            pStatement = Main.getConnection().prepareStatement(query);
             // set parameters
             pStatement.setString(1, username);
             // execute SQL query
@@ -212,7 +212,7 @@ public class MainApp extends javax.swing.JFrame {
             }
             else{
                 //Creating JDBC prepare Statement
-                pStatement = MainApp.getConnection().prepareStatement(query2);
+                pStatement = Main.getConnection().prepareStatement(query2);
                 // set parameters
                 pStatement.setString(1, username);
                 // execute SQL query
@@ -464,6 +464,7 @@ public class MainApp extends javax.swing.JFrame {
         jLabel15.setText("jLabel15");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1000, 700));
         setSize(new java.awt.Dimension(1000, 700));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1166,7 +1167,7 @@ public class MainApp extends javax.swing.JFrame {
             else{
                 try {
                     //Creating JDBC prepare Statement
-                    pStatement = MainApp.getConnection().prepareStatement(query);
+                    pStatement = Main.getConnection().prepareStatement(query);
                     // set parameters
                     pStatement.setString(1, returnRentUsername);
                     pStatement.setString(2, returnRentID);
@@ -1204,7 +1205,7 @@ public class MainApp extends javax.swing.JFrame {
         
         try {
             //Creating JDBC prepare Statement
-            pStatement = MainApp.getConnection().prepareStatement(query);
+            pStatement = Main.getConnection().prepareStatement(query);
             // set parameters
             pStatement.setString(1, loginUsername);
             pStatement.setString(2, loginPassword);
@@ -1232,7 +1233,7 @@ public class MainApp extends javax.swing.JFrame {
                 }          
                 else {
                     //Creating JDBC prepare Statement
-                    pStatement = MainApp.getConnection().prepareStatement(query2);
+                    pStatement = Main.getConnection().prepareStatement(query2);
                     // set parameters
                     pStatement.setString(1, loginUsername);
                     pStatement.setString(2, loginPassword);
@@ -1296,7 +1297,7 @@ public class MainApp extends javax.swing.JFrame {
         else{
             try {
                 //Creating JDBC prepare Statement
-                pStatement = MainApp.getConnection().prepareStatement(query);
+                pStatement = Main.getConnection().prepareStatement(query);
                 // set parameters
                 pStatement.setString(1, registerUsername);
                 pStatement.setString(2, registerPassword);
@@ -1334,7 +1335,7 @@ public class MainApp extends javax.swing.JFrame {
             else{
                 try {
                     //Creating JDBC prepare Statement
-                    pStatement = MainApp.getConnection().prepareStatement(query);
+                    pStatement = Main.getConnection().prepareStatement(query);
                     // set parameters
                     pStatement.setString(1, removeUserName);
                     // execute SQL query & check if the database has updated, inform user of success or failure
@@ -1388,7 +1389,7 @@ public class MainApp extends javax.swing.JFrame {
             else{
                 try {
                     //Creating JDBC prepare Statement
-                    pStatement = MainApp.getConnection().prepareStatement(query);
+                    pStatement = Main.getConnection().prepareStatement(query);
                     // set parameters
                     pStatement.setString(1, returnProducttUsername);
                     pStatement.setString(2, returnProductID);
@@ -1525,14 +1526,22 @@ public class MainApp extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -1545,7 +1554,7 @@ public class MainApp extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainApp().setVisible(true);
+                new Main().setVisible(true);
             }
         });
     }
