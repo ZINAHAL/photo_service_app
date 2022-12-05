@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import javax.swing.DefaultComboBoxModel;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
-//import javax.activation.DataHandler;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,6 +24,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
      */
     private String[] rentPriceRanges = {null, "rentPrice > 0 AND rentPrice <= 30", "rentPrice > 30 AND rentPrice <= 70", "rentPrice > 70"};
     private String[] sellPriceRanges = {null, "sellPrice > 0 AND sellPrice <= 100", "sellPrice > 100 AND sellPrice <= 500", "sellPrice > 500 AND sellPrice <= 1000", "sellPrice > 1000"};
+    private boolean userLoggedIn;
 
     public PhotoServiceApp1() {
         // initComponents();
@@ -156,6 +157,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         }
         // initialise GUI
         initComponents();
+        siteTabs.remove(shoppingCart);
+        sellPriceBox.setEditable(false);
+        rentPriceBox.setEditable(false);
     }
     
     // method to get connection to the database (Reference: https://1bestcsharp.blogspot.com/2018/05/java-login-and-register-form-with-mysql-database.html )
@@ -163,10 +167,10 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         // variables
         Connection connection = null;
         
-        //String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
-        //String dbURL = "jdbc:ucanaccess://" + msAccDB;
-        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
+        String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
         String dbURL = "jdbc:ucanaccess://" + msAccDB;
+//        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
+//        String dbURL = "jdbc:ucanaccess://" + msAccDB;
     
         // Step 1: Loading or registering JDBC driver class
         try {
@@ -278,7 +282,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jPopupMenu7 = new javax.swing.JPopupMenu();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jTabbedPane523 = new javax.swing.JTabbedPane();
+        siteTabs = new javax.swing.JTabbedPane();
         jTabbedPaneLoginRegister = new javax.swing.JTabbedPane();
         jPanelLogin = new javax.swing.JPanel();
         jButtonLogin = new javax.swing.JButton();
@@ -336,7 +340,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         sellPriceRangeComboBox = new javax.swing.JComboBox<>();
         sellCompanyComboBox = new javax.swing.JComboBox<>();
         sellItemComboBox = new javax.swing.JComboBox<>();
-        jButton14 = new javax.swing.JButton();
+        addToCartBuyButton = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -345,13 +349,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         sellItemDescriptionBox = new javax.swing.JTextArea();
         sellPriceBox = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        quantity = new javax.swing.JTextField();
         rentPage = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         rentPriceComboBox = new javax.swing.JComboBox<>();
         rentCompanyComboBox = new javax.swing.JComboBox<>();
         rentItemComboBox = new javax.swing.JComboBox<>();
-        rentButton = new javax.swing.JButton();
+        addToCartRentButton = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -363,7 +367,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         cartContainer = new javax.swing.JPanel();
         cartBuy = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        buyItemButton = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         cartBuyTable = new javax.swing.JTable();
         cartRent = new javax.swing.JPanel();
@@ -480,7 +484,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1000, 700));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTabbedPane523.setPreferredSize(new java.awt.Dimension(1000, 570));
+        siteTabs.setPreferredSize(new java.awt.Dimension(1000, 570));
 
         jButtonLogin.setText("Login");
         jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -917,7 +921,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
         jTabbedPaneLoginRegister.remove(jPanelLogout);
 
-        jTabbedPane523.addTab("Login/Register", jTabbedPaneLoginRegister);
+        siteTabs.addTab("Login/Register", jTabbedPaneLoginRegister);
 
         sellPage.setMaximumSize(new java.awt.Dimension(3276, 3276));
         sellPage.setPreferredSize(new java.awt.Dimension(900, 900));
@@ -943,10 +947,10 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             }
         });
 
-        jButton14.setText("BUY");
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
+        addToCartBuyButton.setText("BUY");
+        addToCartBuyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
+                addToCartBuyButtonActionPerformed(evt);
             }
         });
 
@@ -956,7 +960,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jLabel16.setText("About Item:");
 
-        jLabel18.setText("Sell Price:");
+        jLabel18.setText("Sell Price € :");
 
         sellItemDescriptionBox.setColumns(20);
         sellItemDescriptionBox.setRows(5);
@@ -984,14 +988,14 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sellPageLayout.createSequentialGroup()
                                         .addGroup(sellPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jTextField1))
+                                            .addComponent(quantity))
                                         .addGap(74, 74, 74)))
                                 .addGroup(sellPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(sellItemComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel13)
                                     .addComponent(jLabel18)
                                     .addComponent(sellPriceBox, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(addToCartBuyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(sellCompanyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(59, Short.MAX_VALUE))
                     .addGroup(sellPageLayout.createSequentialGroup()
@@ -1028,12 +1032,12 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(sellPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jButton14, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                    .addComponent(quantity)
+                    .addComponent(addToCartBuyButton, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        jTabbedPane523.addTab("Products", sellPage);
+        siteTabs.addTab("Products", sellPage);
 
         rentPage.setMaximumSize(new java.awt.Dimension(3276, 3276));
         rentPage.setPreferredSize(new java.awt.Dimension(1000, 570));
@@ -1059,10 +1063,10 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
             }
         });
 
-        rentButton.setText("RENT");
-        rentButton.addActionListener(new java.awt.event.ActionListener() {
+        addToCartRentButton.setText("RENT");
+        addToCartRentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rentButtonActionPerformed(evt);
+                addToCartRentButtonActionPerformed(evt);
             }
         });
 
@@ -1072,7 +1076,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         jLabel19.setText("About Item:");
 
-        jLabel20.setText("Rent Price:");
+        jLabel20.setText("Rent Price € :");
 
         itemDescriptionBox.setColumns(20);
         itemDescriptionBox.setRows(5);
@@ -1110,7 +1114,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(rentPageLayout.createSequentialGroup()
                 .addGap(434, 434, 434)
-                .addComponent(rentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addToCartRentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         rentPageLayout.setVerticalGroup(
@@ -1137,22 +1141,22 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rentPriceBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
-                .addComponent(rentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addToCartRentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane523.addTab("Rentals", rentPage);
+        siteTabs.addTab("Rentals", rentPage);
 
         shoppingCart.setLayout(new javax.swing.BoxLayout(shoppingCart, javax.swing.BoxLayout.LINE_AXIS));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("ITEMS TO BUY");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setText("BUY ITEM(S)");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buyItemButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buyItemButton.setText("BUY ITEM(S)");
+        buyItemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buyItemButtonActionPerformed(evt);
             }
         });
 
@@ -1175,7 +1179,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addGroup(cartBuyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addGroup(cartBuyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton1)
+                        .addComponent(buyItemButton)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 811, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
@@ -1187,7 +1191,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buyItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -1260,9 +1264,9 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
 
         shoppingCart.add(cartContainer);
 
-        jTabbedPane523.addTab("My Cart", shoppingCart);
+        siteTabs.addTab("My Cart", shoppingCart);
 
-        getContentPane().add(jTabbedPane523, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(siteTabs, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1361,6 +1365,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                     jTabbedPaneLoginRegister.remove(jPanelLogin);
                     jTabbedPaneLoginRegister.remove(jPanelRegister);
                     jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
+                    siteTabs.addTab("My Cart", shoppingCart);
+                    userLoggedIn = true;
                 }          
                 else {
                     //Creating JDBC prepare Statement
@@ -1378,10 +1384,12 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
                         jTabbedPaneLoginRegister.addTab("List of Stock", jPanelListStock);
                         jTabbedPaneLoginRegister.addTab("Overdue Rentals", jPanelOverdue);
                         jTabbedPaneLoginRegister.addTab("Logout", jPanelLogout);
+                        siteTabs.addTab("My Cart", shoppingCart);
                         jTabbedPaneLoginRegister.remove(jPanelLogin);
                         jTabbedPaneLoginRegister.remove(jPanelRegister); 
                         jTabbedPaneLoginRegister.remove(jPanelReturnRent);
                         jTabbedPaneLoginRegister.remove(jPanelReturnProduct);
+                        userLoggedIn = true;
                     } 
                     // inform user that the inputed data has not been found
                     else {
@@ -1552,11 +1560,13 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         jTabbedPaneLoginRegister.remove(jPanelRegister);
         jTabbedPaneLoginRegister.remove(jPanelReturnRent);
         jTabbedPaneLoginRegister.remove(jPanelReturnProduct);
+        siteTabs.remove(shoppingCart);
         
         jTabbedPaneLoginRegister.addTab("Login", jPanelLogin);
         jTabbedPaneLoginRegister.addTab("Register", jPanelRegister);
         jTabbedPaneLoginRegister.addTab("Return Rented Item", jPanelReturnRent);
         jTabbedPaneLoginRegister.addTab("Return Product", jPanelReturnProduct);
+        userLoggedIn = false;
         
     }//GEN-LAST:event_jButtonLogoutActionPerformed
 
@@ -1588,22 +1598,23 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         itemDescriptionBox.setText((String)queryResult[0][0]);
         itemDescriptionBox.setEditable(false);
         itemDescriptionBox.setLineWrap(true);
-        rentPriceBox.setText(" € " + queryResult[0][1].toString());
+        rentPriceBox.setText(queryResult[0][1].toString());
 
     }//GEN-LAST:event_rentItemComboBoxActionPerformed
 
-    private void rentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentButtonActionPerformed
+    private void addToCartRentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartRentButtonActionPerformed
         // TODO add your handling code here:
-        if(rentItemComboBox.getSelectedIndex() >= 0){
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate date = LocalDate.now(); // Gets the current date
-            Object[][] itemID = DataHandler.getRows("ItemsToRent", "itemID", "WHERE itemName = " + '"' + (String) rentItemComboBox.getSelectedItem() + '"');
-            int successfulInsert = DataHandler.insertData("Rented", "clientID, itemID, rentedDate", "2, " + itemID[0][0].toString() + ", " + '"' + date.format(formatter) + '"');
-            if(successfulInsert != -1){
-                JOptionPane.showMessageDialog(this, "Added to Cart", "", JOptionPane.INFORMATION_MESSAGE);
+        if(userLoggedIn) {
+            if(rentItemComboBox.getSelectedIndex() >= 0){
+                Object[][] itemID = DataHandler.getRows("ItemsToRent", "itemID", "WHERE itemName = " + '"' + (String) rentItemComboBox.getSelectedItem() + '"');
+                DefaultTableModel model = (DefaultTableModel) cartRentTable.getModel();
+                model.addRow(new Object[]{rentItemComboBox.getSelectedItem(), itemID[0][0], rentPriceBox.getText()});
+                JOptionPane.showMessageDialog(this, "Added to Cart", "RENT", JOptionPane.INFORMATION_MESSAGE);
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Please Log In to Rent", "", JOptionPane.INFORMATION_MESSAGE);
         }
-    }//GEN-LAST:event_rentButtonActionPerformed
+    }//GEN-LAST:event_addToCartRentButtonActionPerformed
 
     private void sellPriceRangeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sellPriceRangeComboBoxActionPerformed
         // TODO add your handling code here:
@@ -1633,41 +1644,77 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         sellItemDescriptionBox.setText((String)queryResult[0][0]);
         sellItemDescriptionBox.setEditable(false);
         sellItemDescriptionBox.setLineWrap(true);
-        sellPriceBox.setText(" â‚¬ " + queryResult[0][1].toString());
+        sellPriceBox.setText(queryResult[0][1].toString());
     }//GEN-LAST:event_sellItemComboBoxActionPerformed
 
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+    private void addToCartBuyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToCartBuyButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton14ActionPerformed
+        if(userLoggedIn){
+            if(sellItemComboBox.getSelectedIndex() >= 0){
+                if(quantity.getText().matches("[a-zA-Z]*")){
+                    JOptionPane.showMessageDialog(this, "Please Insert Quantity", "BUY", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    DefaultTableModel model = (DefaultTableModel) cartBuyTable.getModel();
+                    int totalPrice = Integer.parseInt(quantity.getText()) * Integer.parseInt(sellPriceBox.getText());
+                    model.addRow(new Object[]{sellItemComboBox.getSelectedItem(), quantity.getText(), Integer.toString(totalPrice)});
+                    JOptionPane.showMessageDialog(this, "Added to Cart", "BUY", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }    
+        }else{
+            JOptionPane.showMessageDialog(this, "Please Log In to Buy", "", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_addToCartBuyButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void buyItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyItemButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if(cartBuyTable.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this, "Please Specify Products to Buy", "", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Object[][] clientID = DataHandler.getRows("Client", "clientID", "WHERE username = " + '"' + jTextFieldLoginUsername.getText() + '"' + " AND password = " + '"' + new String(jPasswordFieldLogin.getPassword()) + '"');
+        System.out.println("clientid !!!! " + clientID[0][0]);
+        Object[] itemNames = new Object[cartBuyTable.getRowCount()];
+        for(int r = 0; r < cartBuyTable.getRowCount(); r++){
+            itemNames[r] = cartBuyTable.getValueAt(r, 0);
+            System.out.println("ITEM ID!!!!" + itemNames[r]);
+        }
+
+        int successfulInsert = 1;
+        for(int r = 0; r < cartBuyTable.getRowCount(); r++){
+            successfulInsert = DataHandler.insertData("ItemsToSell", "stockName, clientID", '"' + (String) itemNames[r] + '"' + ", " + clientID[0][0]);
+            if(successfulInsert == -1){
+                break;
+            }
+        }
+        if (successfulInsert != -1){
+            JOptionPane.showMessageDialog(this, "Your Buy Request was Successful", "", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "Please Try Again", "", JOptionPane.ERROR_MESSAGE);
+        }
+       
+    }//GEN-LAST:event_buyItemButtonActionPerformed
 
     private void rentItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentItemButtonActionPerformed
-        // TODO add your handling code here:
-        // Button to Start
-        /*
-        Object[] columnData = new Object[jTable1.getRowCount()];  // One entry for each row
-        Object[] rowData = new Object [jTable1.getRowCount()];
-        for (int i = 0; i < jTable1.getRowCount(); i++) {  // Loop through the rows
-            // Record the 5th column value (index 4)
-            columnData[i] = jTable1.getValueAt(i, 4);
+
+        if(cartRentTable.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this, "Please Specify Products to Rent", "", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        System.out.println(Arrays.toString(columnData));
-        */
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate date = LocalDate.now(); // Gets the current date
         Object[][] clientID = DataHandler.getRows("Client", "clientID", "WHERE username = " + '"' + jTextFieldLoginUsername.getText() + '"' + " AND password = " + '"' + new String(jPasswordFieldLogin.getPassword()) + '"');
+        System.out.println("clientid !!!! " + clientID[0][0]);
         Object[] itemIDs = new Object[cartRentTable.getRowCount()];
         for(int r = 0; r < cartRentTable.getRowCount(); r++){
             itemIDs[r] = cartRentTable.getValueAt(r, 1);
-            //            System.out.println((String) itemIDs[r]);
+            System.out.println("ITEM ID!!!!" + itemIDs[r].toString());
         }
+        
         int successfulInsert = 1;
         for(int r = 0; r < cartRentTable.getRowCount(); r++){
-            successfulInsert = DataHandler.insertData("Rent", "clientID, itemID, rentedDate", (String) clientID[0][0] + ", " + (String) itemIDs[r] + ", " + '"' + date.format(formatter) + '"');
+            successfulInsert = DataHandler.insertData("Rent", "clientID, itemID, rentedDate", clientID[0][0] + ", " + itemIDs[r] + ", " + '"' + date.format(formatter) + '"');
             if(successfulInsert == -1){
                 break;
             }
@@ -1675,15 +1722,8 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
         if (successfulInsert != -1){
             JOptionPane.showMessageDialog(this, "Your Rent Request was Successful", "", JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this, "Please Try Again", "", JOptionPane.INFORMATION_MESSAGE);
-
+            JOptionPane.showMessageDialog(this, "Please Try Again", "", JOptionPane.ERROR_MESSAGE);
         }
-
-        //        Object[][] itemID = DataHandler.getRows("ItemsToRent", "itemID", "WHERE itemName = " + '"' + (String) rentItemComboBox.getSelectedItem() + '"');
-        //            int successfulInsert = DataHandler.insertData("Rent", "clientID, itemID, rentedDate", "5, " + itemID[0][0].toString() + ", " + '"' + date.format(formatter) + '"');
-        //            if(successfulInsert != -1){
-            //                JOptionPane.showMessageDialog(this, "Added to Cart", "", JOptionPane.INFORMATION_MESSAGE);
-            //            }
     }//GEN-LAST:event_rentItemButtonActionPerformed
 
     /**
@@ -1849,14 +1889,15 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addToCartBuyButton;
+    private javax.swing.JButton addToCartRentButton;
+    private javax.swing.JButton buyItemButton;
     private javax.swing.JPanel cartBuy;
     private javax.swing.JTable cartBuyTable;
     private javax.swing.JPanel cartContainer;
     private javax.swing.JPanel cartRent;
     private javax.swing.JTable cartRentTable;
     private javax.swing.JTextArea itemDescriptionBox;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonLogin;
     private javax.swing.JButton jButtonLogout;
@@ -1938,12 +1979,10 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTabbedPane jTabbedPane523;
     private javax.swing.JTabbedPane jTabbedPaneLoginRegister;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextFieldLoginUsername;
@@ -1956,7 +1995,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private java.awt.PopupMenu popupMenu1;
     private java.awt.PopupMenu popupMenu2;
     private java.awt.PopupMenu popupMenu3;
-    private javax.swing.JButton rentButton;
+    private javax.swing.JTextField quantity;
     private javax.swing.JComboBox<String> rentCompanyComboBox;
     private javax.swing.JButton rentItemButton;
     private javax.swing.JComboBox<String> rentItemComboBox;
@@ -1970,6 +2009,7 @@ public class PhotoServiceApp1 extends javax.swing.JFrame {
     private javax.swing.JTextField sellPriceBox;
     private javax.swing.JComboBox<String> sellPriceRangeComboBox;
     private javax.swing.JPanel shoppingCart;
+    private javax.swing.JTabbedPane siteTabs;
     // End of variables declaration//GEN-END:variables
     private StringBuilder sbUsers;
     private StringBuilder sbStocks;
