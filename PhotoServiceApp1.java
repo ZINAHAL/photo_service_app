@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author Kenneth Mallabo & Zinah Al-Baghdadi
  */
-public class Main extends javax.swing.JFrame {
+public class PhotoServiceApp1 extends javax.swing.JFrame {
 
     /**
      * Creates new form PhotoServiceApp
@@ -25,7 +25,7 @@ public class Main extends javax.swing.JFrame {
     private String[] rentPriceRanges = {null, "rentPrice > 0 AND rentPrice <= 30", "rentPrice > 30 AND rentPrice <= 70", "rentPrice > 70"};
     private String[] sellPriceRanges = {null, "sellPrice > 0 AND sellPrice <= 100", "sellPrice > 100 AND sellPrice <= 500", "sellPrice > 500 AND sellPrice <= 1000", "sellPrice > 1000"};
 
-    public Main() {
+    public PhotoServiceApp1() {
         // initComponents();
         // variables
         Connection connection = null;
@@ -34,11 +34,11 @@ public class Main extends javax.swing.JFrame {
         ResultSet resultUsers;
         ResultSet resultStocks;
         ResultSet resultOverdue;
-        //String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
-        //String dbURL = "jdbc:ucanaccess://" + msAccDB;
-    
-        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
+        String msAccDB = "photo_serviceDB.accdb"; // path to the DB file
         String dbURL = "jdbc:ucanaccess://" + msAccDB;
+    
+//        String msAccDB = "C:\\Users\\kenne\\OneDrive\\Documents\\Photo_DB\\photo_serviceDB.accdb"; // path to the DB file
+//        String dbURL = "jdbc:ucanaccess://" + msAccDB;
 
         // Step 1: Loading or registering JDBC driver class
         try {
@@ -200,7 +200,7 @@ public class Main extends javax.swing.JFrame {
         
         try {
             //Creating JDBC prepare Statement
-            pStatement = Main.getConnection().prepareStatement(query);
+            pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
             // set parameters
             pStatement.setString(1, username);
             // execute SQL query
@@ -212,7 +212,7 @@ public class Main extends javax.swing.JFrame {
             }
             else{
                 //Creating JDBC prepare Statement
-                pStatement = Main.getConnection().prepareStatement(query2);
+                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query2);
                 // set parameters
                 pStatement.setString(1, username);
                 // execute SQL query
@@ -359,6 +359,18 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         itemDescriptionBox = new javax.swing.JTextArea();
         rentPriceBox = new javax.swing.JTextField();
+        shoppingCart = new javax.swing.JPanel();
+        cartContainer = new javax.swing.JPanel();
+        cartBuy = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        cartBuyTable = new javax.swing.JTable();
+        cartRent = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        rentItemButton = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        cartRentTable = new javax.swing.JTable();
 
         jLabel1.setText("jLabel1");
 
@@ -1131,6 +1143,125 @@ public class Main extends javax.swing.JFrame {
 
         jTabbedPane523.addTab("Rentals", rentPage);
 
+        shoppingCart.setLayout(new javax.swing.BoxLayout(shoppingCart, javax.swing.BoxLayout.LINE_AXIS));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel7.setText("ITEMS TO BUY");
+
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton1.setText("BUY ITEM(S)");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        cartBuyTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "NAME", "QUANTITY", "TOTAL PRICE"
+            }
+        ));
+        jScrollPane4.setViewportView(cartBuyTable);
+
+        javax.swing.GroupLayout cartBuyLayout = new javax.swing.GroupLayout(cartBuy);
+        cartBuy.setLayout(cartBuyLayout);
+        cartBuyLayout.setHorizontalGroup(
+            cartBuyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cartBuyLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(cartBuyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addGroup(cartBuyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton1)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 811, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+        cartBuyLayout.setVerticalGroup(
+            cartBuyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cartBuyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
+        );
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel17.setText("ITEMS TO RENT");
+
+        rentItemButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        rentItemButton.setText("RENT ITEM(S)");
+        rentItemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rentItemButtonActionPerformed(evt);
+            }
+        });
+
+        cartRentTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "NAME", "ITEM CODE", "PRICE"
+            }
+        ));
+        jScrollPane6.setViewportView(cartRentTable);
+
+        javax.swing.GroupLayout cartRentLayout = new javax.swing.GroupLayout(cartRent);
+        cartRent.setLayout(cartRentLayout);
+        cartRentLayout.setHorizontalGroup(
+            cartRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cartRentLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(cartRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(rentItemButton)
+                    .addGroup(cartRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel17)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 811, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+        cartRentLayout.setVerticalGroup(
+            cartRentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cartRentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel17)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(rentItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout cartContainerLayout = new javax.swing.GroupLayout(cartContainer);
+        cartContainer.setLayout(cartContainerLayout);
+        cartContainerLayout.setHorizontalGroup(
+            cartContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cartContainerLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(cartContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cartBuy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cartRent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(96, Short.MAX_VALUE))
+        );
+        cartContainerLayout.setVerticalGroup(
+            cartContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cartContainerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cartRent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cartBuy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18))
+        );
+
+        shoppingCart.add(cartContainer);
+
+        jTabbedPane523.addTab("My Cart", shoppingCart);
+
         getContentPane().add(jTabbedPane523, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -1167,7 +1298,7 @@ public class Main extends javax.swing.JFrame {
             else{
                 try {
                     //Creating JDBC prepare Statement
-                    pStatement = Main.getConnection().prepareStatement(query);
+                    pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
                     // set parameters
                     pStatement.setString(1, returnRentUsername);
                     pStatement.setString(2, returnRentID);
@@ -1205,7 +1336,7 @@ public class Main extends javax.swing.JFrame {
         
         try {
             //Creating JDBC prepare Statement
-            pStatement = Main.getConnection().prepareStatement(query);
+            pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
             // set parameters
             pStatement.setString(1, loginUsername);
             pStatement.setString(2, loginPassword);
@@ -1233,7 +1364,7 @@ public class Main extends javax.swing.JFrame {
                 }          
                 else {
                     //Creating JDBC prepare Statement
-                    pStatement = Main.getConnection().prepareStatement(query2);
+                    pStatement = PhotoServiceApp1.getConnection().prepareStatement(query2);
                     // set parameters
                     pStatement.setString(1, loginUsername);
                     pStatement.setString(2, loginPassword);
@@ -1297,7 +1428,7 @@ public class Main extends javax.swing.JFrame {
         else{
             try {
                 //Creating JDBC prepare Statement
-                pStatement = Main.getConnection().prepareStatement(query);
+                pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
                 // set parameters
                 pStatement.setString(1, registerUsername);
                 pStatement.setString(2, registerPassword);
@@ -1335,7 +1466,7 @@ public class Main extends javax.swing.JFrame {
             else{
                 try {
                     //Creating JDBC prepare Statement
-                    pStatement = Main.getConnection().prepareStatement(query);
+                    pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
                     // set parameters
                     pStatement.setString(1, removeUserName);
                     // execute SQL query & check if the database has updated, inform user of success or failure
@@ -1389,7 +1520,7 @@ public class Main extends javax.swing.JFrame {
             else{
                 try {
                     //Creating JDBC prepare Statement
-                    pStatement = Main.getConnection().prepareStatement(query);
+                    pStatement = PhotoServiceApp1.getConnection().prepareStatement(query);
                     // set parameters
                     pStatement.setString(1, returnProducttUsername);
                     pStatement.setString(2, returnProductID);
@@ -1509,6 +1640,52 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton14ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void rentItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentItemButtonActionPerformed
+        // TODO add your handling code here:
+        // Button to Start
+        /*
+        Object[] columnData = new Object[jTable1.getRowCount()];  // One entry for each row
+        Object[] rowData = new Object [jTable1.getRowCount()];
+        for (int i = 0; i < jTable1.getRowCount(); i++) {  // Loop through the rows
+            // Record the 5th column value (index 4)
+            columnData[i] = jTable1.getValueAt(i, 4);
+        }
+        System.out.println(Arrays.toString(columnData));
+        */
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate date = LocalDate.now(); // Gets the current date
+        Object[][] clientID = DataHandler.getRows("Client", "clientID", "WHERE username = " + '"' + jTextFieldLoginUsername.getText() + '"' + " AND password = " + '"' + new String(jPasswordFieldLogin.getPassword()) + '"');
+        Object[] itemIDs = new Object[cartRentTable.getRowCount()];
+        for(int r = 0; r < cartRentTable.getRowCount(); r++){
+            itemIDs[r] = cartRentTable.getValueAt(r, 1);
+            //            System.out.println((String) itemIDs[r]);
+        }
+        int successfulInsert = 1;
+        for(int r = 0; r < cartRentTable.getRowCount(); r++){
+            successfulInsert = DataHandler.insertData("Rent", "clientID, itemID, rentedDate", (String) clientID[0][0] + ", " + (String) itemIDs[r] + ", " + '"' + date.format(formatter) + '"');
+            if(successfulInsert == -1){
+                break;
+            }
+        }
+        if (successfulInsert != -1){
+            JOptionPane.showMessageDialog(this, "Your Rent Request was Successful", "", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "Please Try Again", "", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
+        //        Object[][] itemID = DataHandler.getRows("ItemsToRent", "itemID", "WHERE itemName = " + '"' + (String) rentItemComboBox.getSelectedItem() + '"');
+        //            int successfulInsert = DataHandler.insertData("Rent", "clientID, itemID, rentedDate", "5, " + itemID[0][0].toString() + ", " + '"' + date.format(formatter) + '"');
+        //            if(successfulInsert != -1){
+            //                JOptionPane.showMessageDialog(this, "Added to Cart", "", JOptionPane.INFORMATION_MESSAGE);
+            //            }
+    }//GEN-LAST:event_rentItemButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1526,14 +1703,126 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PhotoServiceApp1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PhotoServiceApp1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PhotoServiceApp1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PhotoServiceApp1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -1554,13 +1843,19 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                new PhotoServiceApp1().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel cartBuy;
+    private javax.swing.JTable cartBuyTable;
+    private javax.swing.JPanel cartContainer;
+    private javax.swing.JPanel cartRent;
+    private javax.swing.JTable cartRentTable;
     private javax.swing.JTextArea itemDescriptionBox;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonLogin;
@@ -1581,6 +1876,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -1598,6 +1894,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel85;
@@ -1636,7 +1933,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane523;
@@ -1659,6 +1958,7 @@ public class Main extends javax.swing.JFrame {
     private java.awt.PopupMenu popupMenu3;
     private javax.swing.JButton rentButton;
     private javax.swing.JComboBox<String> rentCompanyComboBox;
+    private javax.swing.JButton rentItemButton;
     private javax.swing.JComboBox<String> rentItemComboBox;
     private javax.swing.JPanel rentPage;
     private javax.swing.JTextField rentPriceBox;
@@ -1669,6 +1969,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel sellPage;
     private javax.swing.JTextField sellPriceBox;
     private javax.swing.JComboBox<String> sellPriceRangeComboBox;
+    private javax.swing.JPanel shoppingCart;
     // End of variables declaration//GEN-END:variables
     private StringBuilder sbUsers;
     private StringBuilder sbStocks;
